@@ -49,3 +49,16 @@ export const networks: {
         logo: "storage/images/tiktok.svg",
     }
 ]
+
+export const contact: {
+    id: number;
+    name: string;
+    url: string;
+}[] = 
+[
+    {
+        id: 1,
+        name: "Whatsapp",
+        url: "https://wa.me/51",
+    }
+]
