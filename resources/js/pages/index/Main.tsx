@@ -1,49 +1,22 @@
-import FrontPage from "../sections/FronPage";
-import { Button } from "../ui/button";
+import About from "./sections/About";
+import FrontPage from "./sections/FronPage";
+import Projects from "./sections/Projects";
 
 export default function Main () {
     return (
-        <main className="flex-1">
+        <main className="flex-1 overflow-hidden">
         <section className="w-full py-24">
           <FrontPage />
         </section>
 
          <section id="Projects" className="w-full py-12 bg-muted/50">
-          
+          <Projects />
         </section>
 
-        {/*<section id="nosotros" className="w-full py-12">
-          <div className="container px-4 md:px-6">
-            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-              <Image
-                src="/placeholder.svg?height=600&width=800"
-                alt="Nuestro taller"
-                width={800}
-                height={600}
-                className="mx-auto aspect-video overflow-hidden rounded-xl object-cover"
-              />
-              <div className="space-y-4">
-                <h2 className="text-3xl font-bold tracking-tighter">Sobre Nosotros</h2>
-                <p className="text-muted-foreground">
-                  Con más de 15 años de experiencia, nos especializamos en la creación de muebles, trabajos en vidrio y
-                  estructuras de aluminio de alta calidad. Nuestro equipo de artesanos combina técnicas tradicionales
-                  con tecnología moderna para ofrecer productos excepcionales.
-                </p>
-                <p className="text-muted-foreground">
-                  Cada pieza que creamos refleja nuestro compromiso con la excelencia y la atención al detalle.
-                  Trabajamos estrechamente con nuestros clientes para entender sus necesidades y convertir sus ideas en
-                  realidad.
-                </p>
-                <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                  <Button variant="outline" asChild>
-                    <Link href="#contacto">Conoce más</Link>
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
+        <section id="nosotros" className="w-full py-12">
+          <About />
         </section>
-
+{/*
         <section id="contacto" className="w-full py-12 bg-muted/50">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
