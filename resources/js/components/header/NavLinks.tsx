@@ -13,7 +13,7 @@ const linkVariants = {
 export default function NavLinks({ links }: NavLinksProps) {
   return (
     <motion.nav 
-      className="flex gap-15"
+      className="hidden md:flex gap-15"
       initial="hidden"
       animate="visible" 
 

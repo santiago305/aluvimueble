@@ -9,7 +9,25 @@ const Variants = {
 export default function Footer () {
     const {sectionRef, isVisible}  = useSectionObserver(0.3)
     return (
-        <footer
+      <>
+      <div
+      className="p-10 container flex items-center justify-center"
+      >
+        <motion.a 
+        className='w-32 aspect-square flex justify-center items-center hover:scale-105 transition-all duration-300'
+        href={route('home')}
+        initial={{scale: 0.7, opacity: 0}}
+        animate={isVisible ? {scale: 1, opacity: 1}:{scale: 0.7, opacity: 0}}
+        exit={{scale: 0.7, opacity: 0}}
+        transition={{duration: 1, ease: "linear" }}
+        >
+          <img 
+          src={logo[0].logo} 
+          alt={logo[0].name} 
+          />
+        </motion.a>
+      </div>
+      <footer
         ref={sectionRef} 
         className="w-full border-t py-6 select-none"
         >
@@ -42,5 +60,6 @@ export default function Footer () {
           </div>
         </motion.div>
       </footer>
+      </>
     )
 }

@@ -14,8 +14,8 @@ export default function About () {
         className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center"
         >
             <motion.img
-            src="/placeholder.svg?height=600&width=800"
-            alt="Nuestro taller"
+            src={page[2].image}
+            alt={page[2].content}
             width={800}
             height={600}
             className="mx-auto aspect-video overflow-hidden rounded-xl object-cover"

@@ -70,7 +70,7 @@ export const page:{
         title: "Home",
         content: "Diseño y calidad en muebles, vidriería y aluminio",
         description: "Creamos espacios únicos con materiales de primera calidad. Diseños minimalistas que transforman cualquier ambiente.",
-        image: "storage/images/home.jpg",
+        image: "storage/images/home.webp",
     },
     {
         id: 2,
@@ -84,6 +84,6 @@ export const page:{
         content: "Sobre Nosotros",
         description: "Con más de 15 años de experiencia, nos especializamos en la creación de muebles, trabajos en vidrio y estructuras de aluminio de alta calidad. Nuestro equipo de artesanos combina técnicas tradicionales con tecnología moderna para ofrecer productos excepcionales.",
         description2: "Cada pieza que creamos refleja nuestro compromiso con la excelencia y la atención al detalle. Trabajamos estrechamente con nuestros clientes para entender sus necesidades y convertir sus ideas en realidad.",
-        image: "storage/images/nosotros.jpg",
+        image: "storage/images/home.webp",
     }
 ]
