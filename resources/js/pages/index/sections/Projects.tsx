@@ -41,7 +41,7 @@ export default function Projects () {
             initial={{ opacity: 0, scale: 0 }}
             animate={ isVisible? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 } }
             exit={{opacity: 0, scale: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 1 }}
             >
               <div className="group relative overflow-hidden rounded-lg">
                 <img

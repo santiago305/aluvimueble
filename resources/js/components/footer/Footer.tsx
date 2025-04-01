@@ -11,6 +11,7 @@ export default function Footer () {
     return (
       <>
       <div
+      ref={sectionRef} 
       className="p-10 container flex items-center justify-center"
       >
         <motion.a 
@@ -28,7 +29,7 @@ export default function Footer () {
         </motion.a>
       </div>
       <footer
-        ref={sectionRef} 
+        
         className="w-full border-t py-6 select-none"
         >
         <motion.div 
