@@ -1,7 +1,8 @@
 import { useSectionObserver } from '@/hooks/useSectionObserver';
 import { motion } from 'framer-motion';
 import { page } from '../../../../data';
-export default function Projects () {
+import { BlogsProps } from '@/types/blogs';
+export default function Projects ({blogs}: BlogsProps) {
     const {sectionRef, isVisible}  = useSectionObserver(0.3)
 
     return(
@@ -35,61 +36,41 @@ export default function Projects () {
                 </motion.p>
               </div>
             </div>
-            {/* aca bamos a hacer la */}
-            <motion.div 
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12"
-            initial={{ opacity: 0, scale: 0 }}
-            animate={ isVisible? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 } }
-            exit={{opacity: 0, scale: 0 }}
-            transition={{ duration: 1 }}
+            {blogs.length === 0 ? (
+            <motion.div
+              className="flex items-center justify-center h-60 bg-gray-200 rounded-lg"
+              initial={{ opacity: 0 }}
+              animate={isVisible ? { opacity: 1 } : { opacity: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1 }}
             >
-              <div className="group relative overflow-hidden rounded-lg">
-                <img
-                  src="/placeholder.svg?height=400&width=600"
-                  alt="Muebles minimalistas"
-                  width={600}
-                  height={400}
-                  className="aspect-[4/3] w-full object-cover transition-transform group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <h3 className="text-xl font-medium text-white">Muebles</h3>
-                  <p className="text-sm text-white/90 mt-2">
-                    Diseños contemporáneos que combinan funcionalidad y estética.
-                  </p>
-                </div>
-              </div>
-              <div className="group relative overflow-hidden rounded-lg">
-                <img
-                  src="/placeholder.svg?height=400&width=600"
-                  alt="Trabajos en vidrio"
-                  width={600}
-                  height={400}
-                  className="aspect-[4/3] w-full object-cover transition-transform group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <h3 className="text-xl font-medium text-white">Vidriería</h3>
-                  <p className="text-sm text-white/90 mt-2">Soluciones en vidrio para espacios modernos y elegantes.</p>
-                </div>
-              </div>
-              <div className="group relative overflow-hidden rounded-lg">
-                <img
-                  src="/placeholder.svg?height=400&width=600"
-                  alt="Estructuras de aluminio"
-                  width={600}
-                  height={400}
-                  className="aspect-[4/3] w-full object-cover transition-transform group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <h3 className="text-xl font-medium text-white">Aluminio</h3>
-                  <p className="text-sm text-white/90 mt-2">
-                    Estructuras resistentes y ligeras con acabados perfectos.
-                  </p>
-                </div>
-              </div>
+              <h3 className="text-xl font-medium text-gray-600">Próximamente</h3>
             </motion.div>
-          </div>
+          ) : (
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12"
+              initial={{ opacity: 0, scale: 0 }}
+              animate={isVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
+              exit={{ opacity: 0, scale: 0 }}
+              transition={{ duration: 1 }}
+            >
+              {blogs.map((blog) => (
+                <div key={blog.id} className="group relative overflow-hidden rounded-lg">
+                  <img
+                    src={blog.cover_image}
+                    alt={blog.title}
+                    width={600}
+                    height={400}
+                    className="aspect-[4/3] w-full object-cover transition-transform group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <h3 className="text-xl font-medium text-white">{blog.title}</h3>
+                  </div>
+                </div>
+              ))}
+            </motion.div>
+          )}
+      </div>
     )
 }

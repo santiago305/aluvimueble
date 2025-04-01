@@ -15,6 +15,8 @@ class HomeController extends Controller
         ->limit(3) 
         ->get();
 
-        return Inertia::render('Index', $blocks);
+        return Inertia::render('Index', 
+        ['blogs' => $blocks]
+    );
     }
 }

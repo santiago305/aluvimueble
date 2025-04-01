@@ -1,4 +1,4 @@
-interface Block {
+interface Blogs {
     id: number;
     title: string; // Usamos 'title' en lugar de 'name' según el modelo
     slug: string;
@@ -12,8 +12,8 @@ interface Block {
     published_at: string; // Se utiliza 'string' ya que se maneja como datetime
 }
 
-export interface BlockListProps {
-  blocks: Block[]; 
+export interface BlogsListProps {
+  blocks: Blogs[]; 
   meta: {
       current_page: number;
       last_page: number;
@@ -25,6 +25,6 @@ export interface BlockListProps {
   };
 }
 
-export interface BlockProps {
-  block: Block;
+export interface BlogsProps {
+  blogs: Blogs[];
 }
