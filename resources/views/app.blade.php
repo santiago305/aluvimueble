@@ -30,10 +30,44 @@
             }
         </style>
 
-        <title inertia>{{ config('app.name', 'Laravel') }}</title>
+        <title inertia>{{ config('app.name') }}</title>
 
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
+
+        <meta 
+        property="og:title" 
+        content="aluvimueble" 
+        />
+        <meta 
+        property="og:description" 
+        content="plantilla de pagina web" 
+        />
+        <meta 
+        property="og:image" 
+        content="/logo.png" 
+        /> 
+            <!-- imagen que se ve en twiter antes de ingresar a la pagina -->
+        <meta 
+        name="descriptions" 
+        content="plantilla de pagina web"
+        />
+        <meta 
+        name="twitter:card" 
+        content="summary_large_image"
+        />
+        <meta 
+        name="twitter:size" 
+        content="@sukistrukis"
+        />
+        <meta 
+        name="twitter:description" 
+        content="plantilla de pagina web"
+        />
+        <meta 
+        name="twitter:image" 
+        content="/logo.png" 
+        />
 
         @routes
         @viteReactRefresh
