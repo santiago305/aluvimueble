@@ -12,7 +12,7 @@ export default function Footer () {
       <>
       <div
       ref={sectionRef} 
-      className="p-10 container flex items-center justify-center"
+      className="w-full p-10 flex items-center justify-center"
       >
         <motion.a 
         className='w-32 aspect-square flex justify-center items-center hover:scale-105 transition-all duration-300'
@@ -33,7 +33,7 @@ export default function Footer () {
         className="w-full border-t py-6 select-none"
         >
         <motion.div 
-        className="px-10 container flex flex-col items-center justify-center gap-4 md:flex-row md:justify-between"
+        className="w-full px-10 flex flex-col items-center justify-center gap-4 md:flex-row md:justify-between"
         initial="hidden"
         animate= {isVisible? "visible" : "hidden" }
         exit="hidden"

@@ -8,7 +8,7 @@ export default function Projects ({blogs}: BlogsProps) {
     return(
         <div 
         ref={sectionRef} 
-        className="container px-4 md:px-6"
+        className="w-full px-4 md:px-6"
         >
             <div 
             className="flex flex-col items-center justify-center space-y-4 text-center"
