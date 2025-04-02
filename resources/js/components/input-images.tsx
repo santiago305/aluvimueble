@@ -1,0 +1,68 @@
+import React, { useState } from "react";
+import { Input } from "./ui/input";
+import { motion } from "framer-motion";
+
+interface ImageUploaderProps {
+  onImagesUpload: (files: File[]) => void // Cambié esto a string[] para que reciba URLs de las imágenes
+}
+const ImageUploader:React.FC<ImageUploaderProps> = ({ onImagesUpload }) => {
+  const [files, setFiles] = useState<File[]>([]); // Cambié esto a File[] para que pueda subir imágenes
+  const [previewUrls, setPreviewUrls] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files) return;
+
+    const files = Array.from(event.target.files); // Convertir FileList a array de File
+    setFiles(files);
+    // Crear URLs temporales para la vista previa
+    const urls = files.map((file) => URL.createObjectURL(file));
+    setPreviewUrls(urls);
+
+    // Aquí deberíamos enviar las URLs al componente padre para almacenarlas
+    onImagesUpload(files);
+
+    // Simular carga
+    setLoading(true);
+    setTimeout(() => setLoading(false), 1500);
+  };
+
+  return (
+    <div className="w-full max-w-md">
+      {/* Input de archivos */}
+      <Input
+        type="file"
+        multiple
+        accept="image/*"
+        onChange={handleFileChange}
+      />
+
+
+      {/* Vista previa */}
+      <div className="mt-4 grid grid-cols-3 gap-2">
+        {previewUrls.map((url, index) => (
+          <div key={index} className="relative">
+            {loading && (
+            <div className="absolute w-full h-full flex justify-start items-end">
+              <motion.span
+                className="h-[5px] w-full bg-blue-300 rounded-lg"
+                initial={{ width: "0%" }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 1.5, ease: "linear", }}
+              >
+              </motion.span>
+            </div>
+            )}
+            <img
+              src={url}
+              alt={`preview-${index}`}
+              className="w-full h-20 object-cover rounded-lg shadow-md"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default ImageUploader;

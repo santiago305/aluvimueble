@@ -13,6 +13,11 @@ const mainNavItems: NavItem[] = [
         href: '/dashboard',
         icon: LayoutGrid,
     },
+    {
+        title: 'Crear proyecto',
+        href: '/blogs',
+        icon: BookOpen,
+    }
 ];
 
 const footerNavItems: NavItem[] = [
