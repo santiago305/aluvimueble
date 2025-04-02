@@ -17,6 +17,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('dashboard/register', [RegisteredUserController::class, 'store']);
 
     Route::controller(BlogsController::class)->group(function(){
+        Route::get('blogs/create', 'index')->name('block.index');
         Route::get('blogs', 'create')->name('block.create');
         Route::post('blogs', 'store')->name('block.store');
         Route::put('blogs/{id}', 'update')->name('block.update');

@@ -54,6 +54,7 @@ const ImageUploader:React.FC<ImageUploaderProps> = ({ onImagesUpload }) => {
             </div>
             )}
             <img
+              key={files.length}
               src={url}
               alt={`preview-${index}`}
               className="w-full h-20 object-cover rounded-lg shadow-md"

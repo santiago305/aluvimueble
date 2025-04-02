@@ -71,16 +71,16 @@ class BlogsController extends Controller
     }
 
     // Crear el bloque en la base de datos
-    $block = Block::create($validated);
+    // $block = Blogs::create($validated);
 
-    // Retornar una respuesta exitosa
-    return response()->json([
-        'message' => 'Block creado exitosamente',
-        'data' => $block
-    ], 201);
+    // // Retornar una respuesta exitosa
+    // return response()->json([
+    //     'message' => 'Block creado exitosamente',
+    //     'data' => $block
+    // ], 201);
 
 
-        // dd($validated);
+        dd($validated);
         // Block::create($validated);
         
         // return redirect()->route('block.index')->with('success', 'Block created successfully!');
