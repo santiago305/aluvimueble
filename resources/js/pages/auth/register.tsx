@@ -3,11 +3,12 @@ import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
 
 import InputError from '@/components/input-error';
-import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/auth-layout';
+import AppLayout from '@/layouts/app-layout';
+import { BreadcrumbItem } from '@/types';
 
 type RegisterForm = {
     name: string;
@@ -15,6 +16,13 @@ type RegisterForm = {
     password: string;
     password_confirmation: string;
 };
+
+const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'Register',
+        href: '/dashboard/register',
+    },
+];
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm<Required<RegisterForm>>({
@@ -32,12 +40,13 @@ export default function Register() {
     };
 
     return (
+        <AppLayout breadcrumbs={breadcrumbs}>
+        <Head title='Register'/>
         <AuthLayout title="Create an account" description="Enter your details below to create your account">
-            <Head title="Register" />
             <form className="flex flex-col gap-6" onSubmit={submit}>
                 <div className="grid gap-6">
                     <div className="grid gap-2">
-                        <Label htmlFor="name">Name</Label>
+                        <Label htmlFor="name">Nombre</Label>
                         <Input
                             id="name"
                             type="text"
@@ -48,13 +57,13 @@ export default function Register() {
                             value={data.name}
                             onChange={(e) => setData('name', e.target.value)}
                             disabled={processing}
-                            placeholder="Full name"
+                            placeholder="nombre completo"
                         />
                         <InputError message={errors.name} className="mt-2" />
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="email">Email address</Label>
+                        <Label htmlFor="email">Correo electronico</Label>
                         <Input
                             id="email"
                             type="email"
@@ -64,13 +73,13 @@ export default function Register() {
                             value={data.email}
                             onChange={(e) => setData('email', e.target.value)}
                             disabled={processing}
-                            placeholder="email@example.com"
+                            placeholder="aluvimueble@gmail.com"
                         />
                         <InputError message={errors.email} />
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="password">Password</Label>
+                        <Label htmlFor="password">contraseña</Label>
                         <Input
                             id="password"
                             type="password"
@@ -80,7 +89,7 @@ export default function Register() {
                             value={data.password}
                             onChange={(e) => setData('password', e.target.value)}
                             disabled={processing}
-                            placeholder="Password"
+                            placeholder="Controaseña"
                         />
                         <InputError message={errors.password} />
                     </div>
@@ -96,24 +105,18 @@ export default function Register() {
                             value={data.password_confirmation}
                             onChange={(e) => setData('password_confirmation', e.target.value)}
                             disabled={processing}
-                            placeholder="Confirm password"
+                            placeholder="Confirma tu Contraseña"
                         />
                         <InputError message={errors.password_confirmation} />
                     </div>
 
                     <Button type="submit" className="mt-2 w-full" tabIndex={5} disabled={processing}>
                         {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                        Create account
+                        Crear usuario
                     </Button>
-                </div>
-
-                <div className="text-muted-foreground text-center text-sm">
-                    Already have an account?{' '}
-                    <TextLink href={route('login')} tabIndex={6}>
-                        Log in
-                    </TextLink>
                 </div>
             </form>
         </AuthLayout>
+        </AppLayout>
     );
 }
