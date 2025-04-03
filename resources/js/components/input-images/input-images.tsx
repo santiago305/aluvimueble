@@ -25,7 +25,7 @@ const ImageUploader:React.FC<ImageUploaderProps> = ({ onImagesUpload }) => {
       <Input
         type="file"
         multiple
-        accept="image/*"
+        accept="image/webp"
         onChange={handleFileChange}
       />
 
@@ -33,17 +33,6 @@ const ImageUploader:React.FC<ImageUploaderProps> = ({ onImagesUpload }) => {
       <div className="mt-4 grid grid-cols-3 gap-2">
         {previewUrls.map((url, index) => (
           <div key={index} className="relative">
-            {/* {loading && (
-            <div className="absolute w-full h-full flex justify-start items-end">
-              <motion.span
-                className="h-[5px] w-full bg-blue-300 rounded-lg"
-                initial={{ width: "0%" }}
-                animate={{ width: "100%" }}
-                transition={{ duration: 1.5, ease: "linear", }}
-              >
-              </motion.span>
-            </div>
-            )} */}
             <img
               key={files.length}
               src={url}
