@@ -33,8 +33,8 @@ export interface PreviewBlogsPros {
   onPreviewBlogs: (
     title: string,
     description: string,
-    cover_image: string,
     seo_meta: string,
+    cover_image: string,
     previews: string[],
     videos: string[],
   ) => void

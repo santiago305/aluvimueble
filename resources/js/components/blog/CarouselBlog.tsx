@@ -1,8 +1,8 @@
-import { CarouselBlogProps, ImagesBlogProps } from "@/types/global";
+import { CarouselBlogProps, filesBlogProps } from "@/types/global";
 import clsx from "clsx";
 import { useState, useEffect } from "react";
 
-const CarouselBlog: React.FC<CarouselBlogProps & ImagesBlogProps> = ({ className, images = [] }) => {
+const CarouselBlog: React.FC<CarouselBlogProps & filesBlogProps> = ({ className, images = [] }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const nextSlide = () => {

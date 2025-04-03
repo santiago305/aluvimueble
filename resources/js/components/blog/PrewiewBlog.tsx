@@ -26,6 +26,7 @@ export default function PreviewBlog ({ previewData }: PreviewBlogProps) {
                     <CarouselBlog images={previewData.images} />
                 </div>
                 <DescriptionBlog description={previewData.description} />
+                {previewData.videos.length }
             </div>
         </div>
     )

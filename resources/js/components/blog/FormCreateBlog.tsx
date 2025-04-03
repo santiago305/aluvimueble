@@ -22,15 +22,15 @@ export default function FormCreateBlog ({onPreviewBlogs , onFormChange, classNam
         title: string;
         slug: string;
         description: string;
-        cover_image: string;
+        cover_image:  File|null;
         images: File[];
-        videos: string[];
+        videos: File[];
         seo_meta: string;
     }>({
         title: '',
         slug: '',
         description: '',
-        cover_image: '',
+        cover_image: null,
         images: [],
         videos: [],
         seo_meta: '',
@@ -41,7 +41,16 @@ export default function FormCreateBlog ({onPreviewBlogs , onFormChange, classNam
         setData(field, value);
         onFormChange(field, value);
     };
-
+    const updatePreview = () => {
+        onPreviewBlogs(
+          data.title,
+          data.description,
+          data.cover_image ? URL.createObjectURL(data.cover_image) : "",
+          data.seo_meta,
+          data.images.map(URL.createObjectURL),
+          data.videos.map(URL.createObjectURL)
+        );
+    };
     
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -49,13 +58,17 @@ export default function FormCreateBlog ({onPreviewBlogs , onFormChange, classNam
         formData.append("title", data.title);
         formData.append("slug", data.slug);
         formData.append("description", data.description);
-        formData.append("cover_image", data.cover_image);
+        if (data.cover_image) {
+            formData.append("cover_image", data.cover_image);
+        }
         formData.append("seo_meta", data.seo_meta);
         
         data.images.forEach((file, index) => {
             formData.append(`images[${index}]`, file);
         });
-
+        data.videos.forEach((file, index) => {
+            formData.append(`videos[${index}]`, file);
+        });
         post(route("block.store"), {
             body: formData
         });
@@ -68,18 +81,21 @@ export default function FormCreateBlog ({onPreviewBlogs , onFormChange, classNam
         onFormChange('title', newTitle);
     };
 
-    const handleImagesUpload = (files: File[], previews: string[]) => {
-        setData('images', files); 
-        onPreviewBlogs(
-            data.title,
-            data.description,
-            data.cover_image,
-            data.seo_meta,
-            previews,
-            data.videos,
-        );
+    const handleCoverUpload = (files: File[]) => {
+        if (files.length > 0) {
+            setData("cover_image", files[0]); 
+            setTimeout(updatePreview, 0);
+        }
     };
 
+    const handleImagesUpload = (files: File[]) => {
+        setData('images', files); 
+        setTimeout(updatePreview, 0);
+    };
+    const handleVideosUpload = (files: File[]) => {
+        setData("videos", files);
+        setTimeout(updatePreview, 0);
+    }
     return (
         <form onSubmit={submit} className='w-full sm:max-w-[300px] sm:min-w-[300px] space-y-6 select-none'>
             <InputForm
@@ -120,35 +136,24 @@ export default function FormCreateBlog ({onPreviewBlogs , onFormChange, classNam
                 onChange={handleChange("seo_meta")}
             />
 
-            <Input
-                id="cover_image"
-                label="Cover Image"
-                value={data.cover_image}
-                placeholder="Cover image URL"
-                autoComplete="cover_image"
-                error={errors.cover_image}
-                onChange={handleChange('cover_image')}
+            <ImageUploader 
+            onFilesUpload={handleImagesUpload} 
+            multiple={true} label="Subir Imagenes del proyecto"
             />
+            
+            <ImageUploader 
+            onFilesUpload={handleCoverUpload} 
+            label="Subir portada del proyecto"
 
-            <Input
-                id="videos"
-                label="Videos"
-                value={data.videos.join(', ')}
-                placeholder="Enter video URLs separated by commas"
-                autoComplete="videos"
-                error={errors.videos}
-                onChange={(e) => {
-                    const value = e.target.value
-                        .split(/\s*,\s*/)
-                        .map(v => v.trim())
-                        .filter(v => v !== '');
-                    setData('videos', value);
-                    onFormChange("videos", value);
-                }}
             />
 
 
-            <ImageUploader onImagesUpload={handleImagesUpload} />
+            <ImageUploader 
+            onFilesUpload={handleVideosUpload} 
+            accept="video/mp4,video/webm" 
+            label="Subir video del proyecto"
+            />
+
 
             <div>
                 <Button type="submit">Save</Button>

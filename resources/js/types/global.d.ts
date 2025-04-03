@@ -6,6 +6,7 @@ declare global {
 interface CarouselBlogProps {
     className?: string; 
   }
-interface ImagesBlogProps {
-    images?: string[]
+interface filesBlogProps {
+    images?: string[],
+    video?: string[],
 }
