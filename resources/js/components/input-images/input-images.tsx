@@ -1,14 +1,10 @@
 import React, { useState } from "react";
-import { Input } from "./ui/input";
-import { motion } from "framer-motion";
+import { Input } from "../ui/input";
+import { ImageUploaderProps } from "./InputImagesTyles";
 
-interface ImageUploaderProps {
-  onImagesUpload: (files: File[]) => void // Cambié esto a string[] para que reciba URLs de las imágenes
-}
 const ImageUploader:React.FC<ImageUploaderProps> = ({ onImagesUpload }) => {
-  const [files, setFiles] = useState<File[]>([]); // Cambié esto a File[] para que pueda subir imágenes
+  const [files, setFiles] = useState<File[]>([]); 
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return;
@@ -20,11 +16,7 @@ const ImageUploader:React.FC<ImageUploaderProps> = ({ onImagesUpload }) => {
     setPreviewUrls(urls);
 
     // Aquí deberíamos enviar las URLs al componente padre para almacenarlas
-    onImagesUpload(files);
-
-    // Simular carga
-    setLoading(true);
-    setTimeout(() => setLoading(false), 1500);
+    onImagesUpload(files, urls);
   };
 
   return (
@@ -38,11 +30,10 @@ const ImageUploader:React.FC<ImageUploaderProps> = ({ onImagesUpload }) => {
       />
 
 
-      {/* Vista previa */}
       <div className="mt-4 grid grid-cols-3 gap-2">
         {previewUrls.map((url, index) => (
           <div key={index} className="relative">
-            {loading && (
+            {/* {loading && (
             <div className="absolute w-full h-full flex justify-start items-end">
               <motion.span
                 className="h-[5px] w-full bg-blue-300 rounded-lg"
@@ -52,7 +43,7 @@ const ImageUploader:React.FC<ImageUploaderProps> = ({ onImagesUpload }) => {
               >
               </motion.span>
             </div>
-            )}
+            )} */}
             <img
               key={files.length}
               src={url}

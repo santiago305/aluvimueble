@@ -28,3 +28,18 @@ export interface BlogsListProps {
 export interface BlogsProps {
   blogs: Blogs[];
 }
+
+export interface PreviewBlogsPros {
+  onPreviewBlogs: (
+    title: string,
+    description: string,
+    cover_image: string,
+    seo_meta: string,
+    previews: string[],
+    videos: string[],
+  ) => void
+  onFormChange: (
+    field: string, 
+    value: string | string[]
+  ) => void 
+}

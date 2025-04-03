@@ -1,7 +1,10 @@
 import FormCreateBlog from "@/components/blog/FormCreateBlog";
+import PreviewBlog from "@/components/blog/PrewiewBlog";
+import TitleBlog from "@/components/blog/TitleBlog";
 import AppLayout from "@/layouts/app-layout";
 import { BreadcrumbItem } from "@/types";
 import { Head } from "@inertiajs/react";
+import { useState } from "react";
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -11,25 +14,45 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Create() {
-    
+    const [previewData, setPreviewData] = useState({
+        title: '',
+        description: '',
+        cover_image: '',
+        seo_meta: '',
+        images: [] as string[],
+        videos: [] as string[],
+      });
+
+      const handlePreviewBlogs = (
+        title: string,
+        description: string,
+        cover_image: string,
+        seo_meta: string,
+        images: string[],
+        videos: string[],
+      ) => {
+        setPreviewData({
+          title,
+          description,
+          cover_image,
+          seo_meta,
+          images,
+          videos,
+        });
+      };
+      
+      const handleFormChange = (field: string, value: string | string[]) => {
+        setPreviewData(prev => ({ ...prev, [field]: value }));
+    };
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Create Block" />
             <div 
             className="flex h-full flex-1 flex-wrap-reverse  gap-4 rounded-xl p-4"
             >
-                {/* <div 
-                className="flex-1 min-w-[300px] "
-                >
-                    <div 
-                    className="p-5 w-full h-full border-sidebar-border/70 dark:border-sidebar-border relative overflow-hidden rounded-xl border flex flex-col gap-8"
-                    >
-                        <TitleBlog title={data.title} />
-                        <CarouselBlog />
-                        <p>{data.description}</p>
-                    </div>
-                </div> */}
-                <FormCreateBlog />
+                <PreviewBlog previewData={previewData} />
+                <FormCreateBlog onFormChange={handleFormChange} onPreviewBlogs={handlePreviewBlogs} />
             </div>
         </AppLayout>
     );

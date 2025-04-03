@@ -1,3 +1,5 @@
+import { CarouselBlogProps } from "@/types/global";
+import clsx from "clsx";
 import { useState, useEffect } from "react";
 
 const images = [
@@ -6,7 +8,7 @@ const images = [
   "https://cataas.com/cat/says/gato?size=50&color=red"
 ];
 
-const CarouselBlog: React.FC = () => {
+const CarouselBlog: React.FC<CarouselBlogProps> = ({ className }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const nextSlide = () => {
@@ -25,7 +27,7 @@ const CarouselBlog: React.FC = () => {
   }, [currentIndex]);
 
   return (
-    <div className="relative w-full aspect-video mx-auto overflow-hidden rounded-lg shadow-lg">
+    <div className={clsx("relative w-full aspect-video mx-auto overflow-hidden rounded-lg shadow-lg", className)}>
       <img
         src={images[currentIndex]}
         alt={`Imagen ${currentIndex + 1}`}

@@ -1,22 +1,45 @@
 import { useForm } from "@inertiajs/react";
 import { ChangeEvent, FormEventHandler } from "react";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import InputError from "../input-error";
-import ImageUploader from "../input-images";
+import ImageUploader from "../input-images/input-images";
 import { Button } from "../ui/button";
+import Input from "../Form/input/Input";
+import InputForm from "../Form/input/Input";
+import { PreviewBlogsPros } from "@/types/blogs";
 
-export default function FormCreateBlog (){
-    const { data, setData, post, errors } = useForm({
+const formatSlug = (title: string) => {
+    return title
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '') 
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-'); 
+};
+
+export default function FormCreateBlog ({onPreviewBlogs , onFormChange}: PreviewBlogsPros){
+    const { data, setData, post, errors } = useForm<{
+        title: string;
+        slug: string;
+        description: string;
+        cover_image: string;
+        images: File[];
+        videos: string[];
+        seo_meta: string;
+    }>({
         title: '',
         slug: '',
         description: '',
         cover_image: '',
-        images: [] as File[],
-        videos: [] as string[],
+        images: [],
+        videos: [],
         seo_meta: '',
     });
 
+    const handleChange = (field: keyof typeof data) => (e: ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setData(field, value);
+        onFormChange(field, value);
+    };
+
+    
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
         const formData = new FormData();
@@ -25,103 +48,100 @@ export default function FormCreateBlog (){
         formData.append("description", data.description);
         formData.append("cover_image", data.cover_image);
         formData.append("seo_meta", data.seo_meta);
-
-        // Agregar archivos de imágenes al FormData
+        
         data.images.forEach((file, index) => {
             formData.append(`images[${index}]`, file);
         });
+
         post(route("block.store"), {
-            data: formData,
-            headers: { "Content-Type": "multipart/form-data" },
+            body: formData
         });
-    }
+    };
+    
+    const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const newTitle = e.target.value;
+        setData('title', newTitle);
+        setData('slug', formatSlug(newTitle)); 
+        onFormChange('title', newTitle);
+    };
+
+    const handleImagesUpload = (files: File[], previews: string[]) => {
+        setData('images', files); 
+        onPreviewBlogs(
+            data.title,
+            data.description,
+            data.cover_image,
+            data.seo_meta,
+            previews,
+            data.videos,
+        );
+    };
 
     return (
-        <form onSubmit={submit} className='w-full sm:max-w-[300px] sm:min-w-[300px] space-y-6'>
-            <div className="grid gap-2">
-                <Label htmlFor="title">Title</Label>
-                <Input 
-                    id='title'
-                    className='mt-1 block w-full'
-                    value={data.title}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => setData('title', e.target.value)}
-                    autoComplete='title'
-                    placeholder='Block title'
-                />
-                <InputError message={errors.title} className='mt-2' />
-            </div>
+        <form onSubmit={submit} className='w-full sm:max-w-[300px] sm:min-w-[300px] space-y-6 select-none'>
+            <InputForm
+                id="title"
+                label="Title"
+                value={data.title}
+                placeholder="Block title"
+                autoComplete="title"
+                error={errors.title}
+                onChange={handleTitleChange} 
+            />
+            
+            <Input
+                id="description"
+                label="Description"
+                value={data.description}
+                placeholder="Block description"
+                autoComplete="description"
+                error={errors.description}
+                onChange={handleChange('description')}
+            />
 
-            <div className="grid gap-2">
-                <Label htmlFor="slug">Slug</Label>
-                <Input 
-                    id='slug'
-                    className='mt-1 block w-full'
-                    value={data.slug}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => setData('slug', e.target.value)}
-                    autoComplete='slug'
-                    placeholder='Block slug'
-                />
-                <InputError message={errors.slug} className='mt-2' />
-            </div>
+            <Input
+                id="cover_image"
+                label="Cover Image"
+                value={data.cover_image}
+                placeholder="Cover image URL"
+                autoComplete="cover_image"
+                error={errors.cover_image}
+                onChange={handleChange('cover_image')}
+            />
+            
+            <Input
+                id="seo_meta"
+                label="SEO Meta"
+                value={data.seo_meta}
+                placeholder="SEO meta description"
+                autoComplete="seo_meta"
+                error={errors.seo_meta}
+                onChange={handleChange("seo_meta")}
+            />
 
-            <div className="grid gap-2">
-                <Label htmlFor="description">Description</Label>
-                <Input 
-                    id='description'
-                    className='mt-1 block w-full'
-                    value={data.description}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => setData('description', e.target.value)}
-                    autoComplete='description'
-                    placeholder='Block description'
-                />
-                <InputError message={errors.description} className='mt-2' />
-            </div>
-
-            <div className="grid gap-2">
-                <Label htmlFor="cover_image">Cover Image</Label>
-                <Input 
-                    id='cover_image'
-                    className='mt-1 block w-full'
-                    value={data.cover_image}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => setData('cover_image', e.target.value)}
-                    autoComplete='cover_image'
-                    placeholder='Cover image URL'
-                />
-                <InputError message={errors.cover_image} className='mt-2' />
-            </div>
-            <ImageUploader onImagesUpload={(files) => setData('images', files)} />
-            <div className="grid gap-2">
-                <Label htmlFor="videos">Videos</Label>
-                <Input 
-                    id='videos'
-                    type='text'
-                    className='mt-1 block w-full'
-                    value={data.videos.join(', ')}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => setData('videos', e.target.value.split(', '))}
-                    autoComplete='videos'
-                    placeholder='Enter video URLs separated by commas'
-                />
-                <InputError message={errors.videos} className='mt-2' />
-            </div>
-
-            <div className="grid gap-2">
-                <Label htmlFor="seo_meta">SEO Meta</Label>
-                <Input 
-                    id='seo_meta'
-                    className='mt-1 block w-full'
-                    value={data.seo_meta}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => setData('seo_meta', e.target.value)}
-                    autoComplete='seo_meta'
-                    placeholder='SEO meta description'
-                />
-                <InputError message={errors.seo_meta} className='mt-2' />
-            </div>
+            <Input
+                id="videos"
+                label="Videos"
+                value={data.videos.join(', ')}
+                placeholder="Enter video URLs separated by commas"
+                autoComplete="videos"
+                error={errors.videos}
+                onChange={(e) => {
+                    const value = e.target.value
+                        .split(/\s*,\s*/)
+                        .map(v => v.trim())
+                        .filter(v => v !== '');
+                    setData('videos', value);
+                    onFormChange("videos", value);
+                }}
+            />
 
 
+            <ImageUploader onImagesUpload={handleImagesUpload} />
 
             <div>
                 <Button type="submit">Save</Button>
             </div>
         </form>
-    )
+    );
 }
