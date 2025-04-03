@@ -6,7 +6,7 @@ interface DescriptionBlogProps {
 
 const DescriptionBlog: React.FC<DescriptionBlogProps> = ({ description }) => {
     return (
-        <p className="m-4 text-3xl mt-3 md:text-5-l">
+        <p className="m-4 text-base md:text-lg whitespace-pre-line">
             {description}
         </p>
     );

@@ -1,6 +1,5 @@
 import FormCreateBlog from "@/components/blog/FormCreateBlog";
 import PreviewBlog from "@/components/blog/PrewiewBlog";
-import TitleBlog from "@/components/blog/TitleBlog";
 import AppLayout from "@/layouts/app-layout";
 import { BreadcrumbItem } from "@/types";
 import { Head } from "@inertiajs/react";

@@ -1,14 +1,8 @@
-import { CarouselBlogProps } from "@/types/global";
+import { CarouselBlogProps, ImagesBlogProps } from "@/types/global";
 import clsx from "clsx";
 import { useState, useEffect } from "react";
 
-const images = [
-  "https://cataas.com/cat/says/hola?size=50&color=red",
-  "https://cataas.com/cat/says/perro?size=50&color=red",
-  "https://cataas.com/cat/says/gato?size=50&color=red"
-];
-
-const CarouselBlog: React.FC<CarouselBlogProps> = ({ className }) => {
+const CarouselBlog: React.FC<CarouselBlogProps & ImagesBlogProps> = ({ className, images = [] }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const nextSlide = () => {
@@ -20,11 +14,14 @@ const CarouselBlog: React.FC<CarouselBlogProps> = ({ className }) => {
   };
 
   useEffect(() => {
-    const interval = setInterval(()=>{
-        nextSlide();
+    if (images.length === 0) return;
+    const interval = setInterval(() => {
+      nextSlide();
     }, 5000);
     return () => clearInterval(interval);
-  }, [currentIndex]);
+  }, [currentIndex, images.length]);
+
+  if (images.length === 0) return null;
 
   return (
     <div className={clsx("relative w-full aspect-video mx-auto overflow-hidden rounded-lg shadow-lg", className)}>

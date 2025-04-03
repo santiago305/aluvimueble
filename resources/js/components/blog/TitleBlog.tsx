@@ -6,7 +6,7 @@ interface TitleBlogProps {
 
 const TitleBlog: React.FC<TitleBlogProps> = ({ title }) => {
     return (
-        <h3 className="m-4 text-3xl mt-3 md:text-5-l">
+        <h3 className="m-4 text-3xl md:text-5-l">
             <strong>
                 {title}
             </strong>
