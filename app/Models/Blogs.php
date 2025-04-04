@@ -25,6 +25,7 @@ class Blogs extends Model
     ];
 
     protected $casts = [
+        'cover_image'=> 'array',
         'images' => 'array',
         'videos' => 'array',
         'status' => 'boolean',

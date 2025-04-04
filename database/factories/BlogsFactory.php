@@ -29,7 +29,7 @@ class BlogsFactory extends Factory
             'title' => $this->faker->sentence,  // Título falso
             'slug' => $this->faker->slug,  // Slug falso
             'description' => $this->faker->paragraph,  // Descripción falsa
-            'cover_image' => $this->faker->imageUrl(),  // URL de imagen falsa
+            'cover_image' => json_encode([$this->faker->imageUrl(), $this->faker->imageUrl()]),  // URL de imagen falsa
             'images' => json_encode([$this->faker->imageUrl(), $this->faker->imageUrl()]),  // Imágenes de carousel
             'videos' => json_encode([$this->faker->url(), $this->faker->url()]),  // Videos de carousel
             'seo_meta' => $this->faker->sentence,  // Meta descripción

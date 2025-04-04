@@ -15,7 +15,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Crear proyecto',
-        href: '/blogs',
+        href: route('blogs.create'),
         icon: Folder,
     }
 ];

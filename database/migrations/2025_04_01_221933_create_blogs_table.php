@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('description');
-            $table->string('cover_image')->nullable(); // Featured image
+            $table->json('cover_image')->nullable(); // Featured image
             $table->json('images')->nullable();        // Carousel images
             $table->json('videos')->nullable();        // Carousel videos
             $table->text('seo_meta')->nullable();      // SEO meta description

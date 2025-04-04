@@ -17,13 +17,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('dashboard/register', [RegisteredUserController::class, 'store']);
 
     Route::controller(BlogsController::class)->group(function(){
-        Route::get('blogs/create', 'index')->name('block.index');
-        Route::get('blogs', 'create')->name('block.create');
-        Route::post('blogs', 'store')->name('block.store');
-        Route::put('blogs/{id}', 'update')->name('block.update');
-        Route::delete('blogs/{id}', 'delete')->name('block.delete');
-        Route::put('/blogs/{id}', 'activate')->name('blocks.activate');
-        Route::get('blogs/{id}', 'show')->name('block.show');
+        Route::get('blogs', 'index')->name('blogs.index');
+        Route::get('blogs/create', 'create')->name('blogs.create');
+        Route::post('blogs/create', 'store')->name('blogs.store');
+        Route::put('blogs/{id}', 'update')->name('blogs.update');
+        Route::delete('blogs/{id}', 'delete')->name('blogs.delete');
+        Route::put('/blogs/{id}', 'activate')->name('blogs.activate');
+        Route::get('blogs/{id}', 'show')->name('blogs.show');
     });
 });
 

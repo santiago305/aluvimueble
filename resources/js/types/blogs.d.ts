@@ -34,7 +34,7 @@ export interface PreviewBlogsPros {
     title: string,
     description: string,
     seo_meta: string,
-    cover_image: string,
+    cover_image: string[],
     previews: string[],
     videos: string[],
   ) => void

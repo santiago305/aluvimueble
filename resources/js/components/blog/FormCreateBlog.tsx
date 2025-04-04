@@ -22,7 +22,7 @@ export default function FormCreateBlog ({onPreviewBlogs , onFormChange, classNam
         title: string;
         slug: string;
         description: string;
-        cover_image:  File|null;
+        cover_image:  File[];
         images: File[];
         videos: File[];
         seo_meta: string;
@@ -30,7 +30,7 @@ export default function FormCreateBlog ({onPreviewBlogs , onFormChange, classNam
         title: '',
         slug: '',
         description: '',
-        cover_image: null,
+        cover_image: [],
         images: [],
         videos: [],
         seo_meta: '',
@@ -45,8 +45,8 @@ export default function FormCreateBlog ({onPreviewBlogs , onFormChange, classNam
         onPreviewBlogs(
           data.title,
           data.description,
-          data.cover_image ? URL.createObjectURL(data.cover_image) : "",
           data.seo_meta,
+          data.cover_image.map(URL.createObjectURL),
           data.images.map(URL.createObjectURL),
           data.videos.map(URL.createObjectURL)
         );
@@ -58,18 +58,18 @@ export default function FormCreateBlog ({onPreviewBlogs , onFormChange, classNam
         formData.append("title", data.title);
         formData.append("slug", data.slug);
         formData.append("description", data.description);
-        if (data.cover_image) {
-            formData.append("cover_image", data.cover_image);
-        }
         formData.append("seo_meta", data.seo_meta);
         
         data.images.forEach((file, index) => {
+            formData.append(`cover_image[${index}]`, file);
+        });
+        data.cover_image.forEach((file, index) => {
             formData.append(`images[${index}]`, file);
         });
         data.videos.forEach((file, index) => {
             formData.append(`videos[${index}]`, file);
         });
-        post(route("block.store"), {
+        post(route("blogs.store"), {
             body: formData
         });
     };
@@ -83,7 +83,7 @@ export default function FormCreateBlog ({onPreviewBlogs , onFormChange, classNam
 
     const handleCoverUpload = (files: File[]) => {
         if (files.length > 0) {
-            setData("cover_image", files[0]); 
+            setData("cover_image", files);
             setTimeout(updatePreview, 0);
         }
     };
@@ -137,21 +137,27 @@ export default function FormCreateBlog ({onPreviewBlogs , onFormChange, classNam
             />
 
             <ImageUploader 
+            label="Subir Imagenes del proyecto"
+            multiple={true} 
+            id="images"
             onFilesUpload={handleImagesUpload} 
-            multiple={true} label="Subir Imagenes del proyecto"
+            error={errors.images}
             />
             
             <ImageUploader 
-            onFilesUpload={handleCoverUpload} 
             label="Subir portada del proyecto"
-
+            id="cover"
+            onFilesUpload={handleCoverUpload} 
+            error={errors.cover_image}
             />
 
 
-            <ImageUploader 
+            <ImageUploader
+            label="Subir video del proyecto"
+            id="video" 
             onFilesUpload={handleVideosUpload} 
             accept="video/mp4,video/webm" 
-            label="Subir video del proyecto"
+            error={errors.videos}
             />
 
 

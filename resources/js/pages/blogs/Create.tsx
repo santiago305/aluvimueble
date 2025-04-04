@@ -8,7 +8,7 @@ import { useState } from "react";
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Create Block',
-        href: '/block/create'
+        href: route('blogs.create')
     },
 ];
 
@@ -16,8 +16,8 @@ export default function Create() {
     const [previewData, setPreviewData] = useState({
         title: '',
         description: '',
-        cover_image: '',
         seo_meta: '',
+        cover_image: []as string[],
         images: [] as string[],
         videos: [] as string[],
       });
@@ -25,16 +25,16 @@ export default function Create() {
       const handlePreviewBlogs = (
         title: string,
         description: string,
-        cover_image: string,
         seo_meta: string,
+        cover_image: string[],
         images: string[],
         videos: string[],
       ) => {
         setPreviewData({
           title,
           description,
-          cover_image,
           seo_meta,
+          cover_image,
           images,
           videos,
         });
@@ -46,11 +46,11 @@ export default function Create() {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Create Block" />
+            <Head title="Create Blogs" />
             <div 
             className="flex h-full flex-1 flex-wrap-reverse  gap-4 rounded-xl p-4"
             >
-                <PreviewBlog previewData={previewData} />
+                {/* <PreviewBlog previewData={previewData} /> */}
                 <FormCreateBlog onFormChange={handleFormChange} onPreviewBlogs={handlePreviewBlogs} />
             </div>
         </AppLayout>
