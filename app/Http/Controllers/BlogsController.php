@@ -66,6 +66,14 @@ class BlogsController extends Controller
                 ], 400);
             }
         }
+        // $blog = Blogs::create($validated);
+
+        return response()->json([
+            'message' => 'Blocg creado exitosamente',
+            'status' => true,
+            // 'data' => $blog
+            'data' => $validated
+        ], 201);
         dd($validated);
         
         // Block::create($validated);
