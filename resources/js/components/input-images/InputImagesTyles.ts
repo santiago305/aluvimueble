@@ -7,4 +7,6 @@ export interface filesUploaderProps {
     multiple?: boolean;
     accept?: string; 
     label?: string;
+    previewUrls?: string[];
+
   }

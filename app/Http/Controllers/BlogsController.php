@@ -23,10 +23,10 @@ class BlogsController extends Controller
     public function store(BlogsRequest $request){
     
         $validated = $request->validated();
-
+        // dd($validated);
         $storagePaths = [
             'images' => 'blogs/images',
-            'video' => 'blogs/videos',
+            'videos' => 'blogs/videos',
             'cover_image' => 'blogs/covers'
         ];
     
@@ -36,7 +36,7 @@ class BlogsController extends Controller
                 mkdir($storagePath, 0775, true);
             }
         }
-        $files = ['images', 'video', 'cover_image'];
+        $files = ['images', 'videos', 'cover_image'];
         foreach ($files as $file) {
             if ($request->hasFile($file)) {
                 $fileUrls = [];
@@ -66,8 +66,8 @@ class BlogsController extends Controller
                 ], 400);
             }
         }
-
         dd($validated);
+        
         // Block::create($validated);
         
         // return redirect()->route('block.index')->with('success', 'Block created successfully!');

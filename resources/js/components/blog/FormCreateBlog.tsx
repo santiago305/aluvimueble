@@ -1,5 +1,5 @@
 import { useForm } from "@inertiajs/react";
-import { ChangeEvent, FormEventHandler } from "react";
+import { ChangeEvent, FormEventHandler, useState } from "react";
 import ImageUploader from "../input-images/input-images";
 import { Button } from "../ui/button";
 import Input from "../Form/input/Input";
@@ -18,6 +18,11 @@ const formatSlug = (title: string) => {
 };
 
 export default function FormCreateBlog ({onPreviewBlogs , onFormChange, className}: PreviewBlogsPros & React.ComponentProps<"input">){
+    // Dentro del FormCreateBlog
+    const [imageUrls, setImageUrls] = useState<string[]>([]);
+    const [coverUrls, setCoverUrls] = useState<string[]>([]);
+    const [videoUrls, setVideoUrls] = useState<string[]>([]);
+
     const { data, setData, post, errors } = useForm<{
         title: string;
         slug: string;
@@ -81,19 +86,22 @@ export default function FormCreateBlog ({onPreviewBlogs , onFormChange, classNam
         onFormChange('title', newTitle);
     };
 
-    const handleCoverUpload = (files: File[]) => {
+    const handleCoverUpload = (files: File[],urls: string[]) => {
         if (files.length > 0) {
             setData("cover_image", files);
+            setCoverUrls(urls)
             setTimeout(updatePreview, 0);
         }
     };
 
-    const handleImagesUpload = (files: File[]) => {
+    const handleImagesUpload = (files: File[],urls: string[]) => {
         setData('images', files); 
+        setImageUrls(urls);
         setTimeout(updatePreview, 0);
     };
-    const handleVideosUpload = (files: File[]) => {
+    const handleVideosUpload = (files: File[],urls: string[]) => {
         setData("videos", files);
+        setVideoUrls(urls);
         setTimeout(updatePreview, 0);
     }
     return (
@@ -142,6 +150,7 @@ export default function FormCreateBlog ({onPreviewBlogs , onFormChange, classNam
             id="images"
             onFilesUpload={handleImagesUpload} 
             error={errors.images}
+            previewUrls={imageUrls}
             />
             
             <ImageUploader 
@@ -149,7 +158,9 @@ export default function FormCreateBlog ({onPreviewBlogs , onFormChange, classNam
             id="cover"
             onFilesUpload={handleCoverUpload} 
             error={errors.cover_image}
+            previewUrls={coverUrls}
             />
+
 
 
             <ImageUploader
@@ -158,8 +169,8 @@ export default function FormCreateBlog ({onPreviewBlogs , onFormChange, classNam
             onFilesUpload={handleVideosUpload} 
             accept="video/mp4,video/webm" 
             error={errors.videos}
+            previewUrls={videoUrls}
             />
-
 
             <div>
                 <Button type="submit">Save</Button>

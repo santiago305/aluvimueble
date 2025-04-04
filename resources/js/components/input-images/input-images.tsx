@@ -13,7 +13,8 @@ const ImageUploader:React.FC<filesUploaderProps> = (
     error,
     multiple = false, 
     accept="image/webp" ,
-    label = "Subir archivo"
+    label = "Subir archivo",
+    previewUrls: externalPreviewUrls = []  // <-- NUEVO
   }) => {
   const [files, setFiles] = useState<File[]>([]); 
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
@@ -36,9 +37,8 @@ const ImageUploader:React.FC<filesUploaderProps> = (
       allowedTypes.some((type) => file.type === type)
     );
 
-    if (files.length === 0) {
-      return;
-    }
+    if (files.length === 0) return;
+    
 
     setFiles(files);
 
@@ -50,6 +50,7 @@ const ImageUploader:React.FC<filesUploaderProps> = (
     onFilesUpload(files, urls);
   };
 
+  const urlsToShow = externalPreviewUrls.length > 0 ? externalPreviewUrls : previewUrls;
   return (
     <div className="w-full max-w-md m-0">
       {/* Input de archivos */}
@@ -69,7 +70,7 @@ const ImageUploader:React.FC<filesUploaderProps> = (
       {error && <InputError message={error} className="mt-2 text-red-500" />}
 
       <div className="mt-4 grid grid-cols-3 gap-2">
-        {previewUrls.map((url, index) => (
+        {urlsToShow.map((url, index) => (
           <div key={index} className="relative">
             {files[index].type.startsWith("image/") ? (
               <img
