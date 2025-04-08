@@ -1,13 +1,12 @@
-import { useForm } from "@inertiajs/react";
-import { ChangeEvent, FormEventHandler, useState } from "react";
+import { ChangeEvent, FormEventHandler } from "react";
 import ImageUploader from "../input-images/input-images";
 import { Button } from "../ui/button";
 import Input from "../Form/input/Input";
 import InputForm from "../Form/input/Input";
-import { PreviewBlogsPros } from "@/types/blogs";
 import { Label } from "../ui/label";
 import InputError from "../input-error";
 import { cn } from "@/lib/utils";
+import {  useBlogForm } from "@/hooks/FormBlogContext.tsx";
 
 const formatSlug = (title: string) => {
     return title
@@ -17,45 +16,9 @@ const formatSlug = (title: string) => {
         .replace(/-+/g, '-'); 
 };
 
-export default function FormCreateBlog ({onPreviewBlogs , onFormChange, className}: PreviewBlogsPros & React.ComponentProps<"input">){
-    // Dentro del FormCreateBlog
-    const [imageUrls, setImageUrls] = useState<string[]>([]);
-    const [coverUrls, setCoverUrls] = useState<string[]>([]);
-    const [videoUrls, setVideoUrls] = useState<string[]>([]);
+export default function FormCreateBlog ({ className}: React.ComponentProps<"input">){
 
-    const { data, setData, post, errors } = useForm<{
-        title: string;
-        slug: string;
-        description: string;
-        cover_image:  File[];
-        images: File[];
-        videos: File[];
-        seo_meta: string;
-    }>({
-        title: '',
-        slug: '',
-        description: '',
-        cover_image: [],
-        images: [],
-        videos: [],
-        seo_meta: '',
-    });
-
-    const handleChange = (field: keyof typeof data) => <T extends HTMLInputElement | HTMLTextAreaElement>(e: React.ChangeEvent<T>)  => {
-        const value = e.target.value;
-        setData(field, value);
-        onFormChange(field, value);
-    };
-    const updatePreview = () => {
-        onPreviewBlogs(
-          data.title,
-          data.description,
-          data.seo_meta,
-          data.cover_image.map(URL.createObjectURL),
-          data.images.map(URL.createObjectURL),
-          data.videos.map(URL.createObjectURL)
-        );
-    };
+    const { data, setData, post, errors } = useBlogForm();
     
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -83,26 +46,20 @@ export default function FormCreateBlog ({onPreviewBlogs , onFormChange, classNam
         const newTitle = e.target.value;
         setData('title', newTitle);
         setData('slug', formatSlug(newTitle)); 
-        onFormChange('title', newTitle);
     };
 
-    const handleCoverUpload = (files: File[],urls: string[]) => {
+    const handleCoverUpload = (files: File[]) => {
         if (files.length > 0) {
-            setData("cover_image", files);
-            setCoverUrls(urls)
-            setTimeout(updatePreview, 0);
+            setData("cover_image", files);    
         }
     };
 
     const handleImagesUpload = (files: File[],urls: string[]) => {
-        setData('images', files); 
-        setImageUrls(urls);
-        setTimeout(updatePreview, 0);
+        setData('images', urls); 
+
     };
     const handleVideosUpload = (files: File[],urls: string[]) => {
-        setData("videos", files);
-        setVideoUrls(urls);
-        setTimeout(updatePreview, 0);
+        setData("videos", urls);
     }
     return (
         <form onSubmit={submit} className='w-full sm:max-w-[300px] sm:min-w-[300px] space-y-6 select-none'>
@@ -127,7 +84,12 @@ export default function FormCreateBlog ({onPreviewBlogs , onFormChange, classNam
                         )}
                     value={data.description}
                     placeholder="Block description"
-                    onChange={(e) => handleChange("description")(e)}
+                    onChange={(e) => {
+                        const value = e.target.value;
+                        setData("description", value);
+                    }
+                        // handleChange("description")(e)
+                    }
                     
                 />
                 {errors.description && <InputError message={errors.description} className="mt-2" />}
@@ -141,7 +103,7 @@ export default function FormCreateBlog ({onPreviewBlogs , onFormChange, classNam
                 placeholder="SEO meta description"
                 autoComplete="seo_meta"
                 error={errors.seo_meta}
-                onChange={handleChange("seo_meta")}
+                onChange={(e) => setData("seo_meta", e.target.value)}
             />
 
             <ImageUploader 
@@ -150,7 +112,6 @@ export default function FormCreateBlog ({onPreviewBlogs , onFormChange, classNam
             id="images"
             onFilesUpload={handleImagesUpload} 
             error={errors.images}
-            previewUrls={imageUrls}
             />
             
             <ImageUploader 
@@ -158,10 +119,7 @@ export default function FormCreateBlog ({onPreviewBlogs , onFormChange, classNam
             id="cover"
             onFilesUpload={handleCoverUpload} 
             error={errors.cover_image}
-            previewUrls={coverUrls}
             />
-
-
 
             <ImageUploader
             label="Subir video del proyecto"
@@ -169,11 +127,9 @@ export default function FormCreateBlog ({onPreviewBlogs , onFormChange, classNam
             onFilesUpload={handleVideosUpload} 
             accept="video/mp4,video/webm" 
             error={errors.videos}
-            previewUrls={videoUrls}
             />
-
             <div>
-                <Button type="submit">Save</Button>
+                <Button type="submit" className="cursor-pointer mt-1">Save</Button>
             </div>
         </form>
     );

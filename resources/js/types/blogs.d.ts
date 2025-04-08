@@ -38,8 +38,8 @@ export interface PreviewBlogsPros {
     previews: string[],
     videos: string[],
   ) => void
-  onFormChange: (
-    field: string, 
-    value: string | string[]
-  ) => void 
+  // onFormChange: (
+  //   field: string, 
+  //   value: string | string[]
+  // ) => void 
 }

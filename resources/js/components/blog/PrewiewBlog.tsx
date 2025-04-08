@@ -1,19 +1,10 @@
+import { useBlogForm } from "@/hooks/FormBlogContext.tsx";
 import CarouselBlog from "./CarouselBlog";
 import DescriptionBlog from "./DescriptionBlog";
 import TitleBlog from "./TitleBlog";
 
-interface PreviewBlogProps {
-    previewData: {
-      title: string;
-      description: string;
-      cover_image: string;
-      seo_meta: string;
-      images: string[];
-      videos: string[];
-    };
-  }
-
-export default function PreviewBlog ({ previewData }: PreviewBlogProps) {
+export default function PreviewBlog () {
+    const { data } = useBlogForm();
     return (
         <div 
         className="flex-1 min-w-[300px] select-none"
@@ -21,12 +12,12 @@ export default function PreviewBlog ({ previewData }: PreviewBlogProps) {
             <div 
             className="w-full h-full border-sidebar-border/70 dark:border-sidebar-border relative overflow-y-auto rounded-xl border flex flex-col"
             >
-                <TitleBlog title={previewData.title}/>
+                <TitleBlog title={data.title}/>
                 <div className="p-4">
-                    <CarouselBlog images={previewData.images} />
+                    <CarouselBlog images={data.images} />
                 </div>
-                <DescriptionBlog description={previewData.description} />
-                {previewData.videos.length }
+                <DescriptionBlog description={data.description} />
+                {data.videos.length}
             </div>
         </div>
     )
