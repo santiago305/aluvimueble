@@ -90,7 +90,6 @@ export default function FormCreateBlog ({ className}: React.ComponentProps<"inpu
                         const value = e.target.value;
                         setData("description", value);
                     }
-                        // handleChange("description")(e)
                     }
                     
                 />
@@ -112,6 +111,7 @@ export default function FormCreateBlog ({ className}: React.ComponentProps<"inpu
             label="Subir Imagenes del proyecto"
             multiple={true} 
             id="images"
+            accept="image/webp, image/svg+xml"
             onFilesUpload={handleImagesUpload} 
             error={errors.images}
             />
@@ -119,6 +119,7 @@ export default function FormCreateBlog ({ className}: React.ComponentProps<"inpu
             <ImageUploader 
             label="Subir portada del proyecto"
             id="cover"
+            accept="image/webp, image/svg+xml" 
             onFilesUpload={handleCoverUpload} 
             error={errors.cover_image}
             />
