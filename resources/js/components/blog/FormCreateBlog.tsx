@@ -50,16 +50,18 @@ export default function FormCreateBlog ({ className}: React.ComponentProps<"inpu
 
     const handleCoverUpload = (files: File[]) => {
         if (files.length > 0) {
-            setData("cover_image", files);    
+            setData("cover_image", files); 
         }
     };
 
     const handleImagesUpload = (files: File[],urls: string[]) => {
-        setData('images', urls); 
+        setData('images', files);
+        setData('image_previews', urls); 
 
     };
     const handleVideosUpload = (files: File[],urls: string[]) => {
-        setData("videos", urls);
+        setData("videos", files);
+        setData("video_previews", urls);
     }
     return (
         <form onSubmit={submit} className='w-full sm:max-w-[300px] sm:min-w-[300px] space-y-6 select-none'>

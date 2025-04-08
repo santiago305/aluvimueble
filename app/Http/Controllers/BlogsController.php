@@ -18,12 +18,13 @@ class BlogsController extends Controller
         ]);
     }
     public function create(Request $request){
-        return Inertia::render('blogs/Create');
+        return Inertia::render('blogs/Create', [
+            'error' => $request->session()->get('error'),
+        ]);
     }
     public function store(BlogsRequest $request){
     
         $validated = $request->validated();
-        
         $storagePaths = [
             'images' => 'blogs/images',
             'videos' => 'blogs/videos',
@@ -42,57 +43,56 @@ class BlogsController extends Controller
                 $fileUrls = [];
                 foreach ($request->file($file) as $files) {
                     if (!$files->isValid()) {
-                        session()->flash('error', 'Error al subir la imagen.');
-                        return redirect()->route('blogs.create');
+                        return redirect()->route('blogs.create')
+                        ->with('error', "Error al subir el archivo para {$file}: La imagen no es válida.");
                     }
 
                     $path = $files->store($storagePaths[$file], 'public');
                     if (!file_exists(storage_path('app/public/' . $path))) {
-                        session()->flash('error', 'Error al guardar la imagen: ' . $path);
-                        return redirect()->route('blogs.create');
+                        return redirect()->route('blogs.create')
+                        ->with('error', "Error al guardar el archivo {$file}: {$path}");
                     }
                     $fileUrls[] = 'storage/' . $path;
                 }
                 $validated[$file] = $fileUrls;
             } else {
-                session()->flash('error', "No se han subido {$file}.");
-                return redirect()->route('blogs.create');
+                return redirect()->route('blogs.create')
+                ->with('error', "No se han subido {$file}. Es necesario subir al menos un archivo para {$file}.");
             }
         }
-        $blog = Blogs::create($validated);
-        
-        session()->flash('success', '¡Blog creado exitosamente!');
-        return redirect()->route('blogs.create');
-        
+
+        Blogs::create($validated);
+        return redirect()->route('blogs.index')
+        ->with('success', "¡Blog creado exitosamente!");        
     }
-    public function show($id){
-        $block = Block::where('status', true)->findOrFail($id);
-        // return $blocks;
-        // dd($block);
-        return Inertia::render('Block/Show', ['block' => $block]);
-    }
-//     public function update(Request $request, $id){
+    // public function show($id){
+    //     $block = Block::where('status', true)->findOrFail($id);
+    //     // return $blocks;
+    //     // dd($block);
+    //     return Inertia::render('Block/Show', ['block' => $block]);
+    // }
+    // public function update(Request $request, $id){
 
-//         $block = Block::findOrFail($id);
-//         $validated = $request->validate();
+    //     $block = Block::findOrFail($id);
+    //     $validated = $request->validate();
 
-//         $block->update($validated);
-//         return redirect()->route('Block/Update')->with('success', 'Block updated successfully!');
-//     }
-//     public function delete($id){
-//         $block = Blogs::findOrFail($id);
-//         $block->status = false; // Cambia el estado a inactivo
-//         $block->save();
+    //     $block->update($validated);
+    //     return redirect()->route('Block/Update')->with('success', 'Block updated successfully!');
+    // }
+    // public function delete($id){
+    //     $block = Blogs::findOrFail($id);
+    //     $block->status = false; // Cambia el estado a inactivo
+    //     $block->save();
 
-//         return redirect()->route('blocks.index')->with('success', 'Block deactivated successfully!');
-//     }
-//     public function activate($id)
-//     {
-//         $block = Blogs::findOrFail($id);
-//         $block->status = true; // Activa el block nuevamente
-//         $block->save();
+    //     return redirect()->route('blocks.index')->with('success', 'Block deactivated successfully!');
+    // }
+    // public function activate($id)
+    // {
+    //     $block = Blogs::findOrFail($id);
+    //     $block->status = true; // Activa el block nuevamente
+    //     $block->save();
 
-//         return redirect()->route('blocks.index')->with('success', 'Block activated successfully!');
-//     }
+    //     return redirect()->route('blocks.index')->with('success', 'Block activated successfully!');
+    // }
 
 }

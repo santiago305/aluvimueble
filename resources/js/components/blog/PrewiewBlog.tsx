@@ -2,6 +2,7 @@ import { useBlogForm } from "@/hooks/FormBlogContext.tsx";
 import CarouselBlog from "./CarouselBlog";
 import DescriptionBlog from "./DescriptionBlog";
 import TitleBlog from "./TitleBlog";
+import VideoBlog from "./VideoBlog";
 
 export default function PreviewBlog () {
     const { data } = useBlogForm();
@@ -14,10 +15,12 @@ export default function PreviewBlog () {
             >
                 <TitleBlog title={data.title}/>
                 <div className="p-4">
-                    <CarouselBlog images={data.images} />
+                    <CarouselBlog images={data.image_previews} />
                 </div>
                 <DescriptionBlog description={data.description} />
-                {data.videos.length}
+                <div className="p-4">
+                    <VideoBlog video={data.video_previews} />
+                </div>
             </div>
         </div>
     )

@@ -9,9 +9,11 @@ interface BlogData {
   description: string;
   seo_meta: string;
   cover_image: File[];
-  images: string[];
-  videos: string[];
-  [key: string]: any; // This makes BlogData compatible with FormDataType
+  images: File[];
+  image_previews: string[];
+  videos: File[];
+  video_previews: string[];
+  [key: string]: any;
 }
 
 interface BlogFormContextProps {
@@ -30,7 +32,9 @@ export const BlogFormProvider = ({ children }: { children: React.ReactNode }) =>
     description: '',
     cover_image: [],
     images: [],
+    image_previews: [],
     videos: [],
+    video_previews: [],
     seo_meta: '',
   });
 
