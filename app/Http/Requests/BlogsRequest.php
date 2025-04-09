@@ -34,4 +34,25 @@ class BlogsRequest extends FormRequest
             'published_at' => 'nullable|date',
         ];
     }
+    public function messages(): array
+{
+    return [
+        'title.required' => 'El título es obligatorio.',
+        'title.string' => 'El título debe ser una cadena de texto.',
+        'title.max' => 'El título no puede exceder los 255 caracteres.',
+        'slug.required' => 'El slug es obligatorio.',
+        'slug.string' => 'El slug debe ser una cadena de texto.',
+        'slug.unique' => 'Este título ya está en uso. Por favor elige otro título.',
+        'description.required' => 'La descripción es obligatoria.',
+        'description.string' => 'La descripción debe ser una cadena de texto.',
+        'cover_image.required' => 'La imagen de portada es obligatoria.',
+        'cover_image.array' => 'La imagen de portada debe ser un arreglo.',
+        'images.required' => 'Las imágenes son obligatorias.',
+        'images.array' => 'Las imágenes deben ser un arreglo.',
+        'videos.required' => 'Los videos son obligatorios.',
+        'videos.array' => 'Los videos deben ser un arreglo.',
+        'seo_meta.required' => 'Los metadatos SEO son obligatorios.',
+        'seo_meta.string' => 'Los metadatos SEO deben ser una cadena de texto.'
+    ];
+}
 }
