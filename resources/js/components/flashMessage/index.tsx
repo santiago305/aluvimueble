@@ -1,8 +1,13 @@
-import { AiFillCheckCircle, AiFillAlert, AiOutlineExclamationCircle, AiFillInfoCircle } from 'react-icons/ai';
 import { usePage } from "@inertiajs/react";
-import { motion } from 'framer-motion';
-import { useSectionObserver } from "@/hooks/useSectionObserver";
-import Message from './Message';
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import {
+  AiFillCheckCircle,
+  AiFillAlert,
+  AiOutlineExclamationCircle,
+  AiFillInfoCircle
+} from "react-icons/ai";
+import Message from "./Message";
 
 interface PageProps {
   flash: {
@@ -16,31 +21,42 @@ interface PageProps {
 
 export default function FlashMessage() {
   const { flash } = usePage<PageProps>().props;
-  const { sectionRef, isVisible } = useSectionObserver(0.3);
+  const [customError, setCustomError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      setCustomError(detail);
+      setTimeout(() => setCustomError(null), 5000);
+    };
+
+    window.addEventListener("flash:error", handler);
+    return () => window.removeEventListener("flash:error", handler);
+  }, []);
 
   const types = {
     success: {
       title: "Éxito",
-      color: "#16a34a", 
-      icon: <AiFillCheckCircle className='h-full w-full' />,
+      color: "#16a34a",
+      icon: <AiFillCheckCircle className="h-full w-full" />,
       message: flash.success,
     },
     error: {
       title: "Error",
-      color: "#c50202", 
-      icon: <AiFillAlert className='h-full w-full' />,
-      message: flash.error,
+      color: "#c50202",
+      icon: <AiFillAlert className="h-full w-full" />,
+      message: customError || flash.error,
     },
     warning: {
       title: "Advertencia",
       color: "#eab308",
-      icon: <AiOutlineExclamationCircle className='h-full w-full' />,
+      icon: <AiOutlineExclamationCircle className="h-full w-full" />,
       message: flash.warning,
     },
     info: {
       title: "Información",
-      color: "#2563eb", 
-      icon: <AiFillInfoCircle className='h-full w-full' />,
+      color: "#2563eb",
+      icon: <AiFillInfoCircle className="h-full w-full" />,
       message: flash.info,
     },
   };
@@ -52,31 +68,23 @@ export default function FlashMessage() {
   const [key, { title, color, icon, message }] = activeFlash;
 
   return (
-    <div
-    className='absolute h-screen w-full pointer-events-none select-none overflow-hidden'
-    >
-      <div
-        ref={sectionRef}
-        className="h-full w-full relative "
-      >
+    <div className="absolute h-screen w-full pointer-events-none select-none overflow-hidden">
+      <div className="h-full w-full relative">
         <motion.div
           key={key}
           className="absolute bottom-0 right-0 p-4 z-50"
-          initial={{ y: '100%', opacity: 0 }}
+          initial={{ opacity: 0 }}
           animate={{
-            y: isVisible ? ['100%', 0, 0, 0, '100%'] : '100%',
-            opacity: isVisible ? [0, 1, 1, 1, 0] : 0,
+            opacity: [0, 1, 1, 1, 0],
             transition: {
-              duration: 5,
-              ease: 'easeInOut',
-              times: [0, 0.2, 0.8, 0.8, 1],
+              duration: 6,
+              ease: "easeInOut",
+              times: [0, 0.2, 0.7, 0.8, 1],
             },
           }}
-          exit={{ y: '100%', opacity: 0 }}
+          exit={{  opacity: 0 }}
         >
-          <div
-          className='bg-white dark:bg-black rounded-lg'
-          >
+          <div className="bg-white dark:bg-black rounded-lg">
             <Message
               title={title}
               description={message as string}

@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEventHandler} from "react";
+import { ChangeEvent, FormEventHandler, useState} from "react";
 import ImageUploader from "../input-images/input-images";
 import { Button } from "../ui/button";
 import Input from "../Form/input/Input";
@@ -18,7 +18,9 @@ const formatSlug = (title: string) => {
 
 export default function FormCreateBlog ({ className}: React.ComponentProps<"input">){
 
+    
     const { data, setData, post, reset, errors } = useBlogForm();
+    const [globalError, setGlobalError] = useState<string | null>(null);
     
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -42,11 +44,18 @@ export default function FormCreateBlog ({ className}: React.ComponentProps<"inpu
                 reset();
                 setData('image_previews', []);
                 setData('video_previews', []);
+                setGlobalError(null);
                 // router.reload({ only: ['props'] }); 
-
             },
             onError: (errors) => {
-                console.error("Errores:", errors);
+                if (errors.slug) {
+                    setGlobalError(errors.slug);
+    
+                    // 🔥 Lanza evento global para FlashMessage
+                    window.dispatchEvent(new CustomEvent("flash:error", {
+                        detail: errors.slug
+                    }));
+                }
             }
         });
     };
@@ -72,6 +81,7 @@ export default function FormCreateBlog ({ className}: React.ComponentProps<"inpu
         setData("videos", files);
         setData("video_previews", urls);
     }
+
     return (
         <form onSubmit={submit} className='w-full sm:max-w-[300px] sm:min-w-[300px] space-y-6 select-none'>
             <InputForm

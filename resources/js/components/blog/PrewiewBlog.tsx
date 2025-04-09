@@ -14,13 +14,17 @@ export default function PreviewBlog () {
             className="w-full h-full border-sidebar-border/70 dark:border-sidebar-border relative overflow-y-auto rounded-xl border flex flex-col"
             >
                 <TitleBlog title={data.title}/>
-                <div className="p-4">
-                    <CarouselBlog images={data.image_previews} />
-                </div>
+                {data.image_previews.length > 0 &&(
+                    <div className="p-4">
+                        <CarouselBlog images={data.image_previews} />
+                    </div>
+                )}
                 <DescriptionBlog description={data.description} />
-                <div className="p-4">
-                    <VideoBlog video={data.video_previews} />
-                </div>
+                {data.video_previews.length > 0 && (    
+                    <div className="p-4">
+                        <VideoBlog video={data.video_previews} />
+                    </div>
+                )}
             </div>
         </div>
     )

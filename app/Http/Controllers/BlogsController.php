@@ -24,10 +24,6 @@ class BlogsController extends Controller
     public function store(BlogsRequest $request){
          
         $validated = $request->validated();
-        
-        if ($response = $this->checkIfSlugExists($validated['slug'])) {
-            return $response;
-        }
 
         $storagePaths = [
             'images' => 'blogs/images',
@@ -99,13 +95,4 @@ class BlogsController extends Controller
     //     return redirect()->route('blocks.index')->with('success', 'Block activated successfully!');
     // }
 
-    private function checkIfSlugExists(string $slug)
-    {
-        if (Blogs::where('slug', $slug)->exists()) {
-            return redirect()->route('blogs.index')
-                ->with('warning', 'Este blog ya existe. Por favor, elige otro Título.');
-        }
-
-        return null;
-    }
 }
