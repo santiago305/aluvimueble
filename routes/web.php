@@ -19,7 +19,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::controller(BlogsController::class)->group(function(){
         Route::get('blogs', 'index')->name('blogs.index');
         Route::get('blogs/create', 'create')->name('blogs.create');
-        Route::post('blogs/create', 'store')->name('blogs.store');
+        // Route::get('blogs/store-blogs', 'store')->name('blogs.store'); 
+        Route::post('blogs/store-blogs', 'store')->name('blogs.store');
         Route::put('blogs/{id}', 'update')->name('blogs.update');
         Route::delete('blogs/{id}', 'delete')->name('blogs.delete');
         Route::put('/blogs/{id}', 'activate')->name('blogs.activate');

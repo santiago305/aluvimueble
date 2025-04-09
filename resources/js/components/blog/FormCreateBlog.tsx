@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEventHandler } from "react";
+import { ChangeEvent, FormEventHandler} from "react";
 import ImageUploader from "../input-images/input-images";
 import { Button } from "../ui/button";
 import Input from "../Form/input/Input";
@@ -6,7 +6,7 @@ import InputForm from "../Form/input/Input";
 import { Label } from "../ui/label";
 import InputError from "../input-error";
 import { cn } from "@/lib/utils";
-import {  useBlogForm } from "@/hooks/FormBlogContext.tsx";
+import {  useBlogForm } from "@/hooks/FormBlogContext";
 
 const formatSlug = (title: string) => {
     return title
@@ -18,7 +18,7 @@ const formatSlug = (title: string) => {
 
 export default function FormCreateBlog ({ className}: React.ComponentProps<"input">){
 
-    const { data, setData, post, errors } = useBlogForm();
+    const { data, setData, post, reset, errors } = useBlogForm();
     
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -38,7 +38,16 @@ export default function FormCreateBlog ({ className}: React.ComponentProps<"inpu
             formData.append(`videos[${index}]`, file);
         });
         post(route("blogs.store"), {
-            body: formData
+            onSuccess: () => {
+                reset();
+                setData('image_previews', []);
+                setData('video_previews', []);
+                // router.reload({ only: ['props'] }); 
+
+            },
+            onError: (errors) => {
+                console.error("Errores:", errors);
+            }
         });
     };
     

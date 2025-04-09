@@ -20,13 +20,14 @@ interface BlogFormContextProps {
   data: BlogData;
   setData: <K extends keyof BlogData>(field: K, value: BlogData[K]) => void;
   post: InertiaFormProps<BlogData>["post"];
+  reset: () => void; 
   errors: Partial<Record<keyof BlogData, string>>;
 }
 
 const BlogFormContext = createContext<BlogFormContextProps | undefined>(undefined);
 
 export const BlogFormProvider = ({ children }: { children: React.ReactNode }) => {
-  const { data, setData, post, errors } = useForm<BlogData>({
+  const { data, setData, post, reset, errors } = useForm<BlogData>({
     title: '',
     slug: '',
     description: '',
@@ -39,7 +40,7 @@ export const BlogFormProvider = ({ children }: { children: React.ReactNode }) =>
   });
 
   return (
-    <BlogFormContext.Provider value={{ data, setData, post, errors }}>
+    <BlogFormContext.Provider value={{ data, setData, post, reset, errors }}>
       {children}
     </BlogFormContext.Provider>
   );

@@ -1,6 +1,6 @@
 import FormCreateBlog from "@/components/blog/FormCreateBlog";
 import PreviewBlog from "@/components/blog/PrewiewBlog";
-import { BlogFormProvider} from "@/hooks/FormBlogContext.tsx";
+import { BlogFormProvider} from "@/hooks/FormBlogContext";
 import AppLayout from "@/layouts/app-layout";
 import { BreadcrumbItem } from "@/types";
 import { Head } from "@inertiajs/react";
@@ -17,13 +17,13 @@ export default function Create() {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Create Blogs" />
             <BlogFormProvider>
-              <div 
-              className="flex h-full flex-1 flex-wrap-reverse  gap-4 rounded-xl p-4"
-              >
-                  <PreviewBlog  />
-                  <FormCreateBlog  />
-                  {/* <FormDataDisplay /> */}
-              </div>
+                    <div 
+                    className="flex h-full flex-1 flex-wrap-reverse  gap-4 rounded-xl p-4"
+                    >
+                        <PreviewBlog  />
+                        <FormCreateBlog  />
+                        {/* <FormDataDisplay /> */}
+                    </div>
             </BlogFormProvider>
         </AppLayout>
     );

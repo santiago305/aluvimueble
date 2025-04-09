@@ -1,4 +1,4 @@
-import { useBlogForm } from "@/hooks/FormBlogContext.tsx";
+import { useBlogForm } from "@/hooks/FormBlogContext";
 import CarouselBlog from "./CarouselBlog";
 import DescriptionBlog from "./DescriptionBlog";
 import TitleBlog from "./TitleBlog";

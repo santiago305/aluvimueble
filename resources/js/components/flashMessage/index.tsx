@@ -53,7 +53,7 @@ export default function FlashMessage() {
 
   return (
     <div
-    className='absolute h-full w-full pointer-events-none select-none overflow-hidden'
+    className='absolute h-screen w-full pointer-events-none select-none overflow-hidden'
     >
       <div
         ref={sectionRef}
@@ -74,12 +74,16 @@ export default function FlashMessage() {
           }}
           exit={{ y: '100%', opacity: 0 }}
         >
-          <Message
-            title={title}
-            description={message as string}
-            color={color}
-            icon={icon}
-          />
+          <div
+          className='bg-white dark:bg-black rounded-lg'
+          >
+            <Message
+              title={title}
+              description={message as string}
+              color={color}
+              icon={icon}
+            />
+          </div>
         </motion.div>
       </div>
     </div>

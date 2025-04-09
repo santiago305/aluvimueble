@@ -5,7 +5,7 @@ import { Head } from "@inertiajs/react";
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Create Block',
+        title: 'Blogs',
         href: route('blogs.index')
     },
 ];
@@ -14,20 +14,19 @@ const breadcrumbs: BreadcrumbItem[] = [
 export default function IndexBlogs (){
 
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
-            <Head 
-            title="Blogs" 
-            />
-            <div 
-            className="relative w-full h-full"
-            >
-                <FlashMessage />
-                <div
-                className="w-full h-full p-4"
-                >
-                    hola
-                </div>
-            </div>
-        </AppLayout>
+        <>
+            <FlashMessage />
+            <AppLayout breadcrumbs={breadcrumbs}>
+                <Head 
+                title="Blogs" 
+                />
+                    
+                    <div
+                    className="w-full h-full p-4"
+                    >
+                        hola
+                    </div>
+            </AppLayout>
+        </>
     )
 }
