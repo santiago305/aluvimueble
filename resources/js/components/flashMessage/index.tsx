@@ -68,7 +68,7 @@ export default function FlashMessage() {
   const [key, { title, color, icon, message }] = activeFlash;
 
   return (
-    <div className="fixed inset-0 h-screen w-full pointer-events-none select-none overflow-hidden">
+    <div className="fixed inset-0 h-screen w-full pointer-events-none select-none overflow-hidden z-50">
       <div className="h-full w-full relative">
         <motion.div
           key={key}

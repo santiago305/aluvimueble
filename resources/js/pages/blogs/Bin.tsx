@@ -4,20 +4,21 @@ import { BreadcrumbItem } from "@/types";
 import { BlogsListProps } from "@/types/blogs";
 import { Head, router } from "@inertiajs/react";
 import BlogCard from "@/components/blog/BlogCard";
+import { FaWindowRestore } from "react-icons/fa6";
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
-    title: "Blogs",
-    href: route("blogs.index"),
+    title: "Papelera",
+    href: route("blogs.bin"),
   },
 ];
 
-export default function IndexBlogs({ blogs, meta }: BlogsListProps
+export default function binBlogs({ blogs, meta }: BlogsListProps
 ) {
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
       <FlashMessage />
-      <Head title="Blogs" />
+      <Head title="Papelera" />
 
       <div className="flex h-full flex-1 flex-wrap gap-4 rounded-xl p-4">
         {blogs.length ? (
@@ -28,21 +29,11 @@ export default function IndexBlogs({ blogs, meta }: BlogsListProps
                 title={blog.title}
                 createdAt="2025-04-08T12:00:00Z"
                 imageUrl={blog.cover_image}
-                onEdit={() => console.log("Editar blog", blog.id)}
+                button2Icon={<FaWindowRestore />}
                 onDelete={() => {
-                    if (confirm(`¿Deseas eliminar el blog "${blog.title}"?`)) {
-                    router.delete(route("blogs.delete", blog.id), {
+                    if (confirm(`¿Deseas restaurar el blog "${blog.title}"?`)) {
+                    router.put(route("blogs.activate", blog.id), {
                         preserveScroll: true,
-                        onSuccess: () => {
-                        window.dispatchEvent(new CustomEvent("flash:success", {
-                            detail: "¡Blog eliminado correctamente!"
-                        }));
-                        },
-                        onError: () => {
-                        window.dispatchEvent(new CustomEvent("flash:error", {
-                            detail: "Error al eliminar el blog"
-                        }));
-                        }
                     });
                     }
                 }}

@@ -26,8 +26,18 @@ export default function Message({ title, description, icon, color }: MessageProp
         </div>
       </div>
       <div className="flex flex-col justify-center items-start ml-2">
-        <h6 className="text-base font-bold">{title}</h6>
-        <p className="text-sm w-[30ch]">{description}</p>
+        <h6 
+        className="text-base font-bold"
+        style={{
+          color: color
+        }}
+        >{title}</h6>
+        <p
+        className="text-sm w-[30ch]"
+        style={{
+          color: color
+        }}
+        >{description}</p>
       </div>
     </div>
   );

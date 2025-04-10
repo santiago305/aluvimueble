@@ -11,10 +11,12 @@ use Inertia\Inertia;
 class BlogsController extends Controller
 {
     public function index(){
-        $blocks = Blogs::where('status', true)->paginate(15);
+        $blogs = Blogs::where('status', true)
+                  ->orderBy('id', 'desc') // 'desc' es para orden descendente
+                  ->paginate(15);
         return Inertia::render('blogs/Index', [
-            'blocks' => $blocks->items(),  
-            'meta' => $blocks->toArray()
+            'blogs' => $blogs->items(),  
+            'meta' => $blogs->toArray()
         ]);
     }
     public function create(){
@@ -69,7 +71,7 @@ class BlogsController extends Controller
         $block = Blogs::where('status', true)->findOrFail($id);
         // return $blocks;
         // dd($block);
-        return Inertia::render('Block/Show', ['block' => $block]);
+        return Inertia::render('Blog/Show', ['block' => $block]);
     }
     // public function update(Request $request, $id){
 
@@ -79,20 +81,37 @@ class BlogsController extends Controller
     //     $block->update($validated);
     //     return redirect()->route('Block/Update')->with('success', 'Block updated successfully!');
     // }
-    // public function delete($id){
-    //     $block = Blogs::findOrFail($id);
-    //     $block->status = false; // Cambia el estado a inactivo
-    //     $block->save();
-
-    //     return redirect()->route('blocks.index')->with('success', 'Block deactivated successfully!');
-    // }
-    // public function activate($id)
-    // {
-    //     $block = Blogs::findOrFail($id);
-    //     $block->status = true; // Activa el block nuevamente
-    //     $block->save();
-
-    //     return redirect()->route('blocks.index')->with('success', 'Block activated successfully!');
-    // }
+    public function delete($id){
+        try {
+            $blog = Blogs::findOrFail($id);
+            $blog->status = false; 
+            $blog->save();
+            
+            return back()->with('success', 'Blog eliminado correctamente!');
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return back()->with('error', 'Blog no encontrado.');
+        }
+    }
+    public function bin(){
+        $blogs = Blogs::where('status', false)
+                  ->orderBy('id', 'desc') // 'desc' es para orden descendente
+                  ->paginate(15);
+        return Inertia::render('blogs/Bin', [
+            'blogs' => $blogs->items(),  
+            'meta' => $blogs->toArray()
+        ]);
+    }
+    public function activate($id)
+    {
+        try {
+            $blog = Blogs::findOrFail($id);
+            $blog->status = true; 
+            $blog->save();
+            
+            return back()->with('success', 'Blog restaurado correctamente!');
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return back()->with('error', 'Blog no encontrado.');
+        }
+    }
 
 }

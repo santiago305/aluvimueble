@@ -13,7 +13,7 @@ interface Blogs {
 }
 
 export interface BlogsListProps {
-  blocks: Blogs[]; 
+  blogs: Blogs[]; 
   meta: {
       current_page: number;
       last_page: number;
