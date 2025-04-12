@@ -28,7 +28,12 @@ export default function IndexBlogs({ blogs, meta }: BlogsListProps
                 title={blog.title}
                 createdAt="2025-04-08T12:00:00Z"
                 imageUrl={blog.cover_image}
-                onEdit={() => console.log("Editar blog", blog.id)}
+                onEdit={() => {
+                    router.put(route("blogs.update", blog.id), {
+                        preserveScroll: true,
+                    });
+                    }
+                }
                 onDelete={() => {
                     if (confirm(`¿Deseas eliminar el blog "${blog.title}"?`)) {
                     router.delete(route("blogs.delete", blog.id), {

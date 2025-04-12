@@ -19,6 +19,7 @@ class BlogsController extends Controller
             'meta' => $blogs->toArray()
         ]);
     }
+
     public function create(){
         return Inertia::render('blogs/Create');
     }
@@ -66,21 +67,32 @@ class BlogsController extends Controller
         return redirect()->route('blogs.index')
         ->with('success', "¡Blog creado exitosamente!"); 
     }
+    
+    public function bin(){
+        $blogs = Blogs::where('status', false)
+                  ->orderBy('id', 'desc') // 'desc' es para orden descendente
+                  ->paginate(15);
+        return Inertia::render('blogs/Bin', [
+            'blogs' => $blogs->items(),  
+            'meta' => $blogs->toArray()
+        ]);
+    }
 
     public function show($id){
-        $block = Blogs::where('status', true)->findOrFail($id);
+        $blog = Blogs::where('status', true)->findOrFail($id);
         // return $blocks;
-        // dd($block);
-        return Inertia::render('Blog/Show', ['block' => $block]);
+        dd($blog);
+        // return Inertia::render('Blog/Show', ['block' => $block]);
     }
-    // public function update(Request $request, $id){
+    public function update(Request $request, $id){
 
-    //     $block = Block::findOrFail($id);
-    //     $validated = $request->validate();
+        // $blog = Blogs::findOrFail($id);
+        // $validated = $request->validate();
+        // dd($blog);
 
-    //     $block->update($validated);
-    //     return redirect()->route('Block/Update')->with('success', 'Block updated successfully!');
-    // }
+        // $block->update($validated);
+        // return redirect()->route('Block/Update')->with('success', 'Block updated successfully!');
+    }
     public function delete($id){
         try {
             $blog = Blogs::findOrFail($id);
@@ -92,15 +104,7 @@ class BlogsController extends Controller
             return back()->with('error', 'Blog no encontrado.');
         }
     }
-    public function bin(){
-        $blogs = Blogs::where('status', false)
-                  ->orderBy('id', 'desc') // 'desc' es para orden descendente
-                  ->paginate(15);
-        return Inertia::render('blogs/Bin', [
-            'blogs' => $blogs->items(),  
-            'meta' => $blogs->toArray()
-        ]);
-    }
+    
     public function activate($id)
     {
         try {
