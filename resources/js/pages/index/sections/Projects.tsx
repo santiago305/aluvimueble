@@ -56,7 +56,10 @@ export default function Projects ({blogs}: BlogsListProps) {
               transition={{ duration: 1 }}
             >
               {blogs.map((blog) => (
-                <div key={blog.id} className="group relative overflow-hidden rounded-lg">
+                <a 
+                href={route('projects.show', blog.slug)} 
+                key={blog.id} 
+                className="group relative overflow-hidden rounded-lg">
                   <img
                     src={blog.cover_image}
                     alt={blog.title}
@@ -68,7 +71,7 @@ export default function Projects ({blogs}: BlogsListProps) {
                   <div className="absolute bottom-0 left-0 right-0 p-6">
                     <h3 className="text-xl font-medium text-white">{blog.title}</h3>
                   </div>
-                </div>
+                </a>
               ))}
             </motion.div>
           )}

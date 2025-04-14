@@ -13,6 +13,7 @@ export default function ProjectsShow ({blogs}: BlogsProps) {
         }, 10000);
         return () => clearTimeout(timer); 
     },[])
+    
     return (
         <>
         {blogs?.title}
