@@ -92,8 +92,7 @@ class BlogsController extends Controller
         ]);
     }
 
-    public function update(BlogsRequest $request, Blogs $blog)
-    {
+    public function update(BlogsRequest $request, Blogs $blog){
         $validated = $request->validated();
         $dataToUpdate = [];
 

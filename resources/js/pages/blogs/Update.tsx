@@ -17,7 +17,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 export default function UpdateBlogs ({ blogs }: BlogsProps){
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Create Blogs" />
+            <Head title={`Update ${blogs?.title}`} />
             <FlashMessage/>
             <BlogFormProvider>
                     <div 

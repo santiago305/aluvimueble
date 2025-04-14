@@ -73,28 +73,6 @@ export default function FormCreateBlog ({ className, mode, blogs }: BlogsProps &
               }
             },
         });
-        // if (mode === "edit") {
-        //     formData.append("_method", "put");
-        // }
-
-        // router.post(routeName, formData, {
-        //     onSuccess: () => {
-        //         if (mode === "create") reset();
-        //         setData('image_previews', []);
-        //         setData('video_previews', []);
-        //         setGlobalError(null);
-        //     },
-        //     onError: (errors) => {
-        //         if (errors.slug) {
-        //             setGlobalError(errors.slug);
-    
-        //             // 🔥 Lanza evento global para FlashMessage
-        //             window.dispatchEvent(new CustomEvent("flash:error", {
-        //                 detail: errors.slug
-        //             }));
-        //         }
-        //     }
-        // });
     };
     
     const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {

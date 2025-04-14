@@ -25,7 +25,6 @@ class BlogsRequest extends FormRequest
         $rules = [
             'title' => 'required|string|max:255',
             'slug' => 'required|string|unique:blogs,slug,' . $this->route('blog')->id,
-            // 'slug' => 'required|string|unique:blogs,slug,',
             'description' => 'required|string',
             'seo_meta' => 'required|string',
             'views' => 'nullable|integer|min:0',
@@ -43,21 +42,8 @@ class BlogsRequest extends FormRequest
         }
         
         return $rules;
-        // return [
-        //     'title' => 'required|string|max:255',
-        //     'slug' => 'required|string|unique:blogs,slug,',
-        //     'description' => 'required|string',
-        //     'cover_image' => 'required|array',
-        //     'images' => 'required|array',
-        //     'videos' => 'required|array',
-        //     'seo_meta' => 'required|string',
-        //     'views' => 'nullable|integer|min:0',
-        //     'status' => 'boolean',
-        //     'published_at' => 'nullable|date',
-        // ];
     }
-    public function messages(): array
-{
+    public function messages(): array {
     return [
         'title.required' => 'El título es obligatorio.',
         'title.string' => 'El título debe ser una cadena de texto.',
