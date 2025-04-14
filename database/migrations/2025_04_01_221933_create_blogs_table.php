@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -23,8 +24,7 @@ return new class extends Migration
             $table->text('seo_meta')->nullable();      // SEO meta description
             $table->unsignedBigInteger('views')->default(0);
             $table->boolean('status')->default(true);  // true = active, false = inactive
-            $table->dateTime('published_at')->nullable(); // Publish date
-
+            $table->dateTime('published_at')->default(DB::raw('CURRENT_TIMESTAMP'));// Publish date
             $table->timestamps(); // created_at and updated_at
         });
     }
