@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', HomeController::class)->name('home');
 Route::get('/proyectos',[ProjectsController::class, 'index'])->name('projects.index');
 Route::get('/proyectos/{blog}',[ProjectsController::class, 'show'])->name('projects.show');
+Route::post('projects/{slug}/increment-views', [ProjectsController::class, 'incrementViews'])->name('projects.incrementViews');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', DashboardController::class)->name('dashboard');
