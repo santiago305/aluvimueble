@@ -52,6 +52,7 @@ export default function IndexBlogs({ blogs, meta }: BlogsListProps
                     }
                 }}
                 />
+                
 
             ))
         ) : (
@@ -59,7 +60,7 @@ export default function IndexBlogs({ blogs, meta }: BlogsListProps
         )}
       </div>
      
-      { blogs.length && meta.current_page > 1  ?(
+      { blogs.length && meta && meta.current_page > 1 ?(
          <div className="flex w-full gap-4 p-4 justify-center items-center">
             <div className="pagination">
                 <ul className="flex space-x-2">

@@ -14,9 +14,8 @@ class HomeController extends Controller
         ->orderBy('created_at', 'desc') 
         ->limit(3) 
         ->get();
-
         return Inertia::render('Index', 
         ['blogs' => $blocks]
-    );
+        );
     }
 }

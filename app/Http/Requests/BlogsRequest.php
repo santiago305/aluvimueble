@@ -24,7 +24,7 @@ class BlogsRequest extends FormRequest
     {
         $rules = [
             'title' => 'required|string|max:255',
-            'slug' => 'required|string|unique:blogs,slug,' . $this->route('blog')->id,
+            
             'description' => 'required|string',
             'seo_meta' => 'required|string',
             'views' => 'nullable|integer|min:0',
@@ -33,9 +33,11 @@ class BlogsRequest extends FormRequest
         ];
         if ($this->method() === 'POST') {
             $rules['cover_image'] = 'required|array';
+            $rules['slug'] = 'required|string|unique:blogs,slug,';
             $rules['images'] = 'required|array';
             $rules['videos'] = 'required|array';
         } else {
+            $rules['slug'] ='required|string|unique:blogs,slug,' . $this->route('blog')->id;
             $rules['cover_image'] = 'sometimes|array';
             $rules['images'] = 'sometimes|array';
             $rules['videos'] = 'sometimes|array';

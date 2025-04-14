@@ -45,10 +45,10 @@ export default function FormCreateBlog ({ className, mode, blogs }: BlogsProps &
         formData.append("description", data.description);
         formData.append("seo_meta", data.seo_meta);
         
-        data.images.forEach((file, index) => {
+        data.cover_image.forEach((file, index) => {
             formData.append(`cover_image[${index}]`, file);
         });
-        data.cover_image.forEach((file, index) => {
+        data.images.forEach((file, index) => {
             formData.append(`images[${index}]`, file);
         });
         data.videos.forEach((file, index) => {

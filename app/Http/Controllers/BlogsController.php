@@ -77,13 +77,6 @@ class BlogsController extends Controller
             'meta' => $blogs->toArray()
         ]);
     }
-
-    public function show($id){
-        $blog = Blogs::where('status', true)->findOrFail($id);
-        // return $blocks;
-        dd($blog);
-        // return Inertia::render('Blog/Show', ['block' => $block]);
-    }
     public function edit($slug){
 
         $blog = Blogs::where('slug', $slug)->firstOrFail();

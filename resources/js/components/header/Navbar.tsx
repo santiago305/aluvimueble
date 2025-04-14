@@ -6,7 +6,7 @@ import { contact } from '../../../data'
 // Definimos los enlaces en una variable separada
 const leftLinks = [
   { href: "/#about", label: "Nosotros" },
-  { href: "/#projects", label: "Proyectos" },
+  { href: route('projects.index'), label: "Proyectos" },
 ];
 
 const linkVariants = {

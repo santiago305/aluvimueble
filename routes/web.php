@@ -4,10 +4,12 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BlogsController;
+use App\Http\Controllers\ProjectsController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::get('/', HomeController::class)->name('home');
+Route::get('/proyectos',[ProjectsController::class, 'index'])->name('projects.index');
+Route::get('/proyectos/{blog}',[ProjectsController::class, 'show'])->name('projects.show');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', DashboardController::class)->name('dashboard');
@@ -21,7 +23,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('blogs/create', 'create')->name('blogs.create');
         Route::post('blogs/create', 'store')->name('blogs.store');
         Route::get('blogs/bin', 'bin')->name('blogs.bin'); 
-        Route::get('blogs/{id}', 'show')->name('blogs.show');
         Route::get('blogs/{slug}/edit', 'edit')->name('blogs.edit');
         Route::put('blogs/{blog}', 'update')->name('blogs.update');
         Route::delete('blogs/{id}', 'delete')->name('blogs.delete');

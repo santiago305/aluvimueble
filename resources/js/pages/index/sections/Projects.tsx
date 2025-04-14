@@ -13,7 +13,8 @@ export default function Projects ({blogs}: BlogsListProps) {
             <div 
             className="flex flex-col items-center justify-center space-y-4 text-center"
             >
-              <div 
+              <a
+              href={route('projects.index')} 
               className="space-y-2"
               >
                 <motion.h2 
@@ -34,7 +35,7 @@ export default function Projects ({blogs}: BlogsListProps) {
                 >
                   {page[1].description}
                 </motion.p>
-              </div>
+              </a>
             </div>
             {blogs.length === 0 ? (
             <motion.div

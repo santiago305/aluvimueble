@@ -14,7 +14,7 @@ interface Blogs {
 
 export interface BlogsListProps {
   blogs: Blogs[]; 
-  meta: {
+  meta?: {
       current_page: number;
       last_page: number;
       links: Array<{
@@ -26,7 +26,7 @@ export interface BlogsListProps {
 }
 
 export interface BlogsProps {
-  mode: 'post' | 'put';
+  mode?: 'post' | 'put';
   blogs?: Blogs;
 }
 
