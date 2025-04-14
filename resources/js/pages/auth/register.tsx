@@ -42,7 +42,7 @@ export default function Register() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
         <Head title='Register'/>
-        <AuthLayout title="Create an account" description="Enter your details below to create your account">
+        <AuthLayout title="Crea un Usuario" description="Ingresa los detalles del usuario">
             <form className="flex flex-col gap-6" onSubmit={submit}>
                 <div className="grid gap-6">
                     <div className="grid gap-2">

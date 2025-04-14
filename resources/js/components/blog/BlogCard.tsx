@@ -60,7 +60,7 @@ export default function BlogCard({
         <div
           className="w-full h-full rounded-sm overflow-hidden select-none bg-center bg-cover"
           style={{
-            backgroundImage: `url(/${imageUrl})`,
+            backgroundImage: `url(${imageUrl})`,
           }}
         >
           <div className="w-full h-full flex justify-center items-center bg-black/50 p-2">

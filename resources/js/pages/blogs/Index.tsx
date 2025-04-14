@@ -29,7 +29,7 @@ export default function IndexBlogs({ blogs, meta }: BlogsListProps
                 createdAt="2025-04-08T12:00:00Z"
                 imageUrl={blog.cover_image}
                 onEdit={() => {
-                    router.put(route("blogs.update", blog.id), {
+                    router.get(route("blogs.edit", blog.slug), {
                         preserveScroll: true,
                     });
                     }

@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEventHandler, useState} from "react";
+import { ChangeEvent, FormEventHandler, useEffect, useState} from "react";
 import ImageUploader from "../input-images/input-images";
 import { Button } from "../ui/button";
 import Input from "../Form/input/Input";
@@ -7,6 +7,7 @@ import { Label } from "../ui/label";
 import InputError from "../input-error";
 import { cn } from "@/lib/utils";
 import {  useBlogForm } from "@/hooks/FormBlogContext";
+import { BlogsProps } from "@/types/blogs";
 
 const formatSlug = (title: string) => {
     return title
@@ -16,11 +17,25 @@ const formatSlug = (title: string) => {
         .replace(/-+/g, '-'); 
 };
 
-export default function FormCreateBlog ({ className}: React.ComponentProps<"input">){
+export default function FormCreateBlog ({ className, mode, blogs }: BlogsProps & React.ComponentProps<"input">){
 
     
-    const { data, setData, post, reset, errors } = useBlogForm();
+    const { data, setData, errors, submitForm } = useBlogForm();
     const [globalError, setGlobalError] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (mode === "put" && blogs) {
+          setData("title", blogs.title);
+          setData("slug", blogs.slug);
+          setData("description", blogs.description);
+          setData("seo_meta", blogs.seo_meta);
+          setData("image_previews", blogs.images || []);
+          setData("video_previews", blogs.videos || []);
+          setData("cover_image", []); 
+          setData("images", []);
+          setData("videos", []);
+        }
+      }, [mode, blogs]);
     
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -39,25 +54,47 @@ export default function FormCreateBlog ({ className}: React.ComponentProps<"inpu
         data.videos.forEach((file, index) => {
             formData.append(`videos[${index}]`, file);
         });
-        post(route("blogs.store"), {
+        const routeName = mode === "put" && blogs
+        ? route("blogs.update", blogs.slug)
+        : route("blogs.store");
+
+        submitForm(routeName, mode, formData, {
             onSuccess: () => {
-                reset();
-                setData('image_previews', []);
-                setData('video_previews', []);
-                setGlobalError(null);
-                // router.reload({ only: ['props'] }); 
+              setGlobalError(null);
             },
             onError: (errors) => {
-                if (errors.slug) {
-                    setGlobalError(errors.slug);
-    
-                    // 🔥 Lanza evento global para FlashMessage
-                    window.dispatchEvent(new CustomEvent("flash:error", {
-                        detail: errors.slug
-                    }));
-                }
-            }
+              if (errors.slug) {
+                setGlobalError(errors.slug);
+                window.dispatchEvent(
+                  new CustomEvent("flash:error", {
+                    detail: errors.slug,
+                  })
+                );
+              }
+            },
         });
+        // if (mode === "edit") {
+        //     formData.append("_method", "put");
+        // }
+
+        // router.post(routeName, formData, {
+        //     onSuccess: () => {
+        //         if (mode === "create") reset();
+        //         setData('image_previews', []);
+        //         setData('video_previews', []);
+        //         setGlobalError(null);
+        //     },
+        //     onError: (errors) => {
+        //         if (errors.slug) {
+        //             setGlobalError(errors.slug);
+    
+        //             // 🔥 Lanza evento global para FlashMessage
+        //             window.dispatchEvent(new CustomEvent("flash:error", {
+        //                 detail: errors.slug
+        //             }));
+        //         }
+        //     }
+        // });
     };
     
     const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {

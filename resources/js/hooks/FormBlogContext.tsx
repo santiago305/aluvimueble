@@ -1,8 +1,6 @@
-// BlogFormContext.tsx
-import React, { createContext, useContext } from "react";
-import { useForm, InertiaFormProps } from "@inertiajs/react";
+import React, { createContext, useContext, useState } from "react";
+import { router } from "@inertiajs/react";
 
-// Add an index signature
 interface BlogData {
   title: string;
   slug: string;
@@ -19,28 +17,82 @@ interface BlogData {
 interface BlogFormContextProps {
   data: BlogData;
   setData: <K extends keyof BlogData>(field: K, value: BlogData[K]) => void;
-  post: InertiaFormProps<BlogData>["post"];
-  reset: () => void; 
+  submitForm: (
+    routeName: string,
+    method: "post" | "put",
+    formData: FormData,
+    options?: {
+      onSuccess?: () => void;
+      onError?: (errors: Record<string, string>) => void;
+    }
+  ) => void;
+  reset: () => void;
   errors: Partial<Record<keyof BlogData, string>>;
 }
 
 const BlogFormContext = createContext<BlogFormContextProps | undefined>(undefined);
 
 export const BlogFormProvider = ({ children }: { children: React.ReactNode }) => {
-  const { data, setData, post, reset, errors } = useForm<BlogData>({
-    title: '',
-    slug: '',
-    description: '',
+  const [data, setDataState] = useState<BlogData>({
+    title: "",
+    slug: "",
+    description: "",
+    seo_meta: "",
     cover_image: [],
     images: [],
     image_previews: [],
     videos: [],
     video_previews: [],
-    seo_meta: '',
   });
 
+  const [errors, setErrors] = useState<Partial<Record<keyof BlogData, string>>>({});
+
+  const setData = <K extends keyof BlogData>(field: K, value: BlogData[K]) => {
+    setDataState((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  const reset = () => {
+    setDataState({
+      title: "",
+      slug: "",
+      description: "",
+      seo_meta: "",
+      cover_image: [],
+      images: [],
+      image_previews: [],
+      videos: [],
+      video_previews: [],
+    });
+    setErrors({});
+  };
+
+  const submitForm = (
+    routeName: string,
+    method: "post" | "put",
+    formData: FormData,
+    { onSuccess, onError }: { onSuccess?: () => void; onError?: (errors: any) => void } = {}
+  ) => {
+    if (method === "put") {
+      formData.append("_method", "put");
+    }
+
+    router.post(routeName, formData, {
+      onSuccess: () => {
+        reset();
+        if (onSuccess) onSuccess();
+      },
+      onError: (errs) => {
+        setErrors(errs);
+        if (onError) onError(errs);
+      },
+    });
+  };
+
   return (
-    <BlogFormContext.Provider value={{ data, setData, post, reset, errors }}>
+    <BlogFormContext.Provider value={{ data, setData, submitForm, reset, errors }}>
       {children}
     </BlogFormContext.Provider>
   );

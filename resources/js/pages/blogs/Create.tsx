@@ -8,7 +8,7 @@ import { Head } from "@inertiajs/react";
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Create Block',
+        title: 'Create Blog',
         href: route('blogs.create')
     },
 ];
@@ -23,7 +23,7 @@ export default function Create() {
                     className="flex h-full flex-1 flex-wrap-reverse  gap-4 rounded-xl p-4"
                     >
                         <PreviewBlog  />
-                        <FormCreateBlog  />
+                        <FormCreateBlog mode='post' />
                     </div>
             </BlogFormProvider>
         </AppLayout>

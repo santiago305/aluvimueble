@@ -26,7 +26,8 @@ export interface BlogsListProps {
 }
 
 export interface BlogsProps {
-  blogs: Blogs[];
+  mode: 'post' | 'put';
+  blogs?: Blogs;
 }
 
 export interface PreviewBlogsPros {

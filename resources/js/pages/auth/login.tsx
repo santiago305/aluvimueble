@@ -36,7 +36,7 @@ export default function Login({ status }: LoginProps) {
     };
 
     return (
-        <AuthLayout title="Inicia Sesión" description="ngrese su correo electrónico y contraseña a continuación">
+        <AuthLayout title="Inicia Sesión" description="Ingrese su correo electrónico y contraseña a continuación">
             <Head title="Iniciar sesion" />
 
             <form className="flex flex-col gap-6" onSubmit={submit}>

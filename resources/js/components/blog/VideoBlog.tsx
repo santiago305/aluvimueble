@@ -12,7 +12,10 @@ export default function VideoBlog ({ className, video = [] } : CarouselBlogProps
             loop
             className="w-full h-full object-cover"
         >
-            <source src={video[0]} type="video/mp4" />
+            <source 
+            src={video[0]} 
+            type="video/mp4" 
+            />
             Tu navegador no soporta la etiqueta de video.
         </video>
         </div>

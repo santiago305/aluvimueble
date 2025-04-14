@@ -22,7 +22,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('blogs/create', 'store')->name('blogs.store');
         Route::get('blogs/bin', 'bin')->name('blogs.bin'); 
         Route::get('blogs/{id}', 'show')->name('blogs.show');
-        Route::put('blogs/{id}', 'update')->name('blogs.update');
+        Route::get('blogs/{slug}/edit', 'edit')->name('blogs.edit');
+        Route::put('blogs/{blog}', 'update')->name('blogs.update');
         Route::delete('blogs/{id}', 'delete')->name('blogs.delete');
         Route::put('blogs/bin/{id}', 'activate')->name('blogs.activate');
     });

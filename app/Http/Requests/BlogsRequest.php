@@ -19,20 +19,42 @@ class BlogsRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules()
+    // : array
     {
-        return [
+        $rules = [
             'title' => 'required|string|max:255',
-            'slug' => 'required|string|unique:blogs,slug,',
+            'slug' => 'required|string|unique:blogs,slug,' . $this->route('blog')->id,
+            // 'slug' => 'required|string|unique:blogs,slug,',
             'description' => 'required|string',
-            'cover_image' => 'required|array',
-            'images' => 'required|array',
-            'videos' => 'required|array',
             'seo_meta' => 'required|string',
             'views' => 'nullable|integer|min:0',
             'status' => 'boolean',
             'published_at' => 'nullable|date',
         ];
+        if ($this->method() === 'POST') {
+            $rules['cover_image'] = 'required|array';
+            $rules['images'] = 'required|array';
+            $rules['videos'] = 'required|array';
+        } else {
+            $rules['cover_image'] = 'sometimes|array';
+            $rules['images'] = 'sometimes|array';
+            $rules['videos'] = 'sometimes|array';
+        }
+        
+        return $rules;
+        // return [
+        //     'title' => 'required|string|max:255',
+        //     'slug' => 'required|string|unique:blogs,slug,',
+        //     'description' => 'required|string',
+        //     'cover_image' => 'required|array',
+        //     'images' => 'required|array',
+        //     'videos' => 'required|array',
+        //     'seo_meta' => 'required|string',
+        //     'views' => 'nullable|integer|min:0',
+        //     'status' => 'boolean',
+        //     'published_at' => 'nullable|date',
+        // ];
     }
     public function messages(): array
 {

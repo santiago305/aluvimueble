@@ -1,8 +1,8 @@
 import { useSectionObserver } from '@/hooks/useSectionObserver';
 import { motion } from 'framer-motion';
 import { page } from '../../../../data';
-import { BlogsProps } from '@/types/blogs';
-export default function Projects ({blogs}: BlogsProps) {
+import { BlogsListProps } from '@/types/blogs';
+export default function Projects ({blogs}: BlogsListProps) {
     const {sectionRef, isVisible}  = useSectionObserver(0.3)
 
     return(

@@ -31,4 +31,8 @@ class Blogs extends Model
         'status' => 'boolean',
         'published_at' => 'datetime',
     ];
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }
