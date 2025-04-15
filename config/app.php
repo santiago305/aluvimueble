@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'aluvimueble'),
+    'name' => env('APP_NAME', 'AluviMueble - Muebles Modernos Personalizados'),
 
     /*
     |--------------------------------------------------------------------------

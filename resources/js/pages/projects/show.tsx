@@ -22,7 +22,11 @@ export default function ProjectsShow ({blogs}: BlogsProps) {
     
     return (
         <div className="flex min-h-screen w-full flex-col">
-            <Head title={blogs?.title}/>
+            <Head title={blogs?.title}>
+            {blogs?.seo_meta && (
+                <meta name="description" content={blogs?.seo_meta} />
+            )}
+            </Head>
             <Header />
             <main className="w-full flex-1 p-4 md:p-10 flex justify-center">   
                 <div className="flex-1 max-w-[900px] h-full select-none">

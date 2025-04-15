@@ -8,7 +8,7 @@ export default function Index ({blogs}: BlogsListProps) {
     return (
         <>
             <div className="flex min-h-screen w-full flex-col">
-                <Head title="Aluvimueble"/>
+                <Head title="Aluvimueble - Muebles Modernos Personalizados"/>
                 <Header />
                 <Main blogs={blogs} />
                 <Footer />
