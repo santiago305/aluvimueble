@@ -34,7 +34,7 @@ const CarouselBlog: React.FC<CarouselBlogProps & filesBlogProps> = ({ className,
       {/* Botón Izquierda */}
       <button
         onClick={prevSlide}
-        className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/80 transition-all duration-200"
+        className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/80 transition-all duration-200 cursor-pointer"
       >
         ❮
       </button>
@@ -42,7 +42,7 @@ const CarouselBlog: React.FC<CarouselBlogProps & filesBlogProps> = ({ className,
       {/* Botón Derecha */}
       <button
         onClick={nextSlide}
-        className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/80 transition-all duration-200"
+        className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/80 transition-all duration-200 cursor-pointer"
       >
         ❯
       </button>

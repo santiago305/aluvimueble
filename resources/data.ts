@@ -7,7 +7,7 @@ export const logo: {
     {
         id: 1,
         name: "Aluvimuble",
-        logo: "storage/images/logo.svg",
+        logo: "/storage/images/logo.svg",
     }
 ]
 
@@ -22,25 +22,25 @@ export const networks: {
         id: 1,
         name: "Facebook",
         url: "https://www.facebook.com/aluvimueble/",
-        logo: "storage/icons/facebook.svg",
+        logo: "/storage/icons/facebook.svg",
     },
     {
         id: 2,
         name: "Instagram",
         url: "https://www.instagram.com/aluvimueble/",
-        logo: "storage/icons/instagram.svg",
+        logo: "/storage/icons/instagram.svg",
     },
     {
         id: 3,
         name: "Twitter",
         url: "https://www.x.com/aluvimueble/",
-        logo: "storage/icons/x.svg",
+        logo: "/storage/icons/x.svg",
     },
     {
         id: 4,
         name: "Tiktok",
         url: "https://www.tiktok.com/aluvimueble/",
-        logo: "storage/icons/tiktok.svg",
+        logo: "/storage/icons/tiktok.svg",
     }
 ]
 

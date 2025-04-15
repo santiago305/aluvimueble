@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface DescriptionBlogProps {
-    description: string;
+    description?: string;
 }
 
 const DescriptionBlog: React.FC<DescriptionBlogProps> = ({ description }) => {

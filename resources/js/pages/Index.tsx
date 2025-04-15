@@ -6,11 +6,13 @@ import { Head } from "@inertiajs/react";
 
 export default function Index ({blogs}: BlogsListProps) {
     return (
-        <div className="flex min-h-screen w-full flex-col">
-            <Head title="Aluvimueble"/>
-            <Header />
-            <Main blogs={blogs} />
-            <Footer />
-        </div>
+        <>
+            <div className="flex min-h-screen w-full flex-col">
+                <Head title="Aluvimueble"/>
+                <Header />
+                <Main blogs={blogs} />
+                <Footer />
+            </div>
+        </>
     )
 }

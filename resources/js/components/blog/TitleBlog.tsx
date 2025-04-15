@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface TitleBlogProps {
-    title: string;
+    title?: string;
 }
 
 const TitleBlog: React.FC<TitleBlogProps> = ({ title }) => {
