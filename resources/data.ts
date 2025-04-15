@@ -21,13 +21,13 @@ export const networks: {
     {
         id: 1,
         name: "Facebook",
-        url: "https://www.facebook.com/aluvimueble/",
+        url: "https://www.facebook.com/profile.php?id=100054289609535",
         logo: "/storage/icons/facebook.svg",
     },
     {
         id: 2,
         name: "Instagram",
-        url: "https://www.instagram.com/aluvimueble/",
+        url: "https://www.instagram.com/aluvimueble_/",
         logo: "/storage/icons/instagram.svg",
     },
     {
@@ -39,7 +39,7 @@ export const networks: {
     {
         id: 4,
         name: "Tiktok",
-        url: "https://www.tiktok.com/aluvimueble/",
+        url: "https://www.tiktok.com/@aluvimueble",
         logo: "/storage/icons/tiktok.svg",
     }
 ]
@@ -53,7 +53,7 @@ export const contact: {
     {
         id: 1,
         name: "Whatsapp",
-        url: "https://wa.me/51",
+        url: "https://wa.me/51942261209",
     }
 ]
 

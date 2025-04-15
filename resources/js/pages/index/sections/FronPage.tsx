@@ -40,9 +40,9 @@ export default function FrontPage (){
                   asChild
                   >
                     <a 
-                    href="#productos"
+                    href={route('projects.index')}
                     >
-                      Ver productos 
+                      Ver Trabajos 
                       <ArrowRight 
                       className="ml-2 h-4 w-4" 
                       />
