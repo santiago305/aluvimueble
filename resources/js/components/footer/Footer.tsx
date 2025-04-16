@@ -15,7 +15,7 @@ export default function Footer () {
       className="w-full p-10 flex items-center justify-center"
       >
         <motion.a 
-        className='w-32 aspect-square flex justify-center items-center hover:scale-105 transition-all duration-300'
+        className='w-32 aspect-square flex justify-center items-center hover:scale-105 transition-all duration-300 select-none cursor-pointer'
         href={route('home')}
         initial={{scale: 0.7, opacity: 0}}
         animate={isVisible ? {scale: 1, opacity: 1}:{scale: 0.7, opacity: 0}}
@@ -49,12 +49,12 @@ export default function Footer () {
                 href={network.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm font-medium"
+                className="text-sm font-medium cursor-pointer select-none"
                 >
                 <img
                     src={network.logo}
                     alt={network.name}
-                    className="h-6 w-6" // Puedes ajustar el tamaño del icono si es necesario
+                    className="h-6 w-6 select-none" // Puedes ajustar el tamaño del icono si es necesario
                 />
                 </a>
             ))}

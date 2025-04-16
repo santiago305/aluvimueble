@@ -24,7 +24,7 @@ const CarouselBlog: React.FC<CarouselBlogProps & filesBlogProps> = ({ className,
   if (images.length === 0) return null;
 
   return (
-    <div className={clsx("relative w-full max-w-[700px] aspect-video mx-auto overflow-hidden rounded-lg shadow-lg", className)}>
+    <div className={clsx("relative w-full max-w-[700px] aspect-video mx-auto overflow-hidden rounded-lg shadow-lg select-none", className)}>
       <img
         src={images[currentIndex]}
         alt={`Imagen ${currentIndex + 1}`}
