@@ -33,7 +33,6 @@ class BlogsFactory extends Factory
             'images' => json_encode([$this->faker->imageUrl(), $this->faker->imageUrl()]),  // Imágenes de carousel
             'videos' => json_encode([$this->faker->url(), $this->faker->url()]),  // Videos de carousel
             'seo_meta' => $this->faker->sentence,  // Meta descripción
-            'views' => $this->faker->numberBetween(0, 1000),  // Número de vistas aleatorio
             'status' => $this->faker->boolean,  // Estado activo/inactivo
             'published_at' => $this->faker->dateTimeThisYear,  // Fecha de publicación aleatoria
         ];

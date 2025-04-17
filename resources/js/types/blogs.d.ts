@@ -7,7 +7,6 @@ interface Blogs {
     images: string[]; // Suponiendo que este es un arreglo de URLs de imágenes
     videos: string[]; // Suponiendo que este es un arreglo de URLs de videos
     seo_meta: string;
-    views: number;
     status: boolean;
     published_at: string; // Se utiliza 'string' ya que se maneja como datetime
 }

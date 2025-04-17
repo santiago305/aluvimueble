@@ -27,7 +27,6 @@ class BlogsRequest extends FormRequest
             
             'description' => 'required|string',
             'seo_meta' => 'required|string',
-            'views' => 'nullable|integer|min:0',
             'status' => 'boolean',
             'published_at' => 'nullable|date',
         ];

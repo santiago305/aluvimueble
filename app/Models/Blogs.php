@@ -19,7 +19,6 @@ class Blogs extends Model
         'images',
         'videos',
         'seo_meta',
-        'views',
         'status',
         'published_at',
     ];

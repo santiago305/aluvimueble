@@ -22,7 +22,6 @@ return new class extends Migration
             $table->json('images')->nullable();        // Carousel images
             $table->json('videos')->nullable();        // Carousel videos
             $table->text('seo_meta')->nullable();      // SEO meta description
-            $table->unsignedBigInteger('views')->default(0);
             $table->boolean('status')->default(true);  // true = active, false = inactive
             $table->dateTime('published_at')->default(DB::raw('CURRENT_TIMESTAMP'));// Publish date
             $table->timestamps(); // created_at and updated_at
