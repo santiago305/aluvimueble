@@ -23,8 +23,4 @@ class ProjectsController extends Controller
             'blogs'=> $blog
         ]);
     }
-    public function incrementViews($slug){
-        $blog = Blogs::where('slug', $slug)->firstOrFail();
-        $blog->increment('views');
-    }
 }
