@@ -5,20 +5,10 @@ import VideoBlog from "@/components/blog/VideoBlog";
 import Footer from "@/components/footer/Footer";
 import Header from "@/components/header/Header";
 import { BlogsProps } from "@/types/blogs";
-import { Head, router } from "@inertiajs/react";
-import { useEffect } from "react";
+import { Head } from "@inertiajs/react";
+
 
 export default function ProjectsShow ({blogs}: BlogsProps) {
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            router.post(
-                route('projects.incrementViews', blogs?.slug),
-                {},
-            );
-        }, 5000);
-        return () => clearTimeout(timer); 
-    },[])
     
     return (
         <div className="flex min-h-screen w-full flex-col">
