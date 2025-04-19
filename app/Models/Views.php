@@ -14,6 +14,9 @@ class Views extends Model
         'device_type',
         'browser',
         'viewed_at',
+        'country',
+        'region',
+        'city',
     ];
 
     protected $casts = [

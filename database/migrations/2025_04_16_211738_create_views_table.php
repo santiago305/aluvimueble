@@ -21,6 +21,9 @@ return new class extends Migration
             $table->timestamp('viewed_at')->useCurrent();
             $table->string('device_type')->nullable();
             $table->string('browser')->nullable();
+            $table->string('country')->nullable();
+            $table->string('region')->nullable(); // Departamento
+            $table->string('city')->nullable();
             $table->timestamps();
         });
     }
