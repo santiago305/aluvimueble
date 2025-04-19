@@ -16,50 +16,73 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-const chartData = [
-  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-  { browser: "firefox", visitors: 287, fill: "var(--color-firefox)" },
-  { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-  { browser: "other", visitors: 190, fill: "var(--color-other)" },
-]
+import { BrowserGroup } from "@/types/view"
 
-const chartConfig = {
-  visitors: {
-    label: "Visitors",
-  },
-  chrome: {
-    label: "Chrome",
-    color: "#2662D9",
-  },
-  safari: {
-    label: "Safari",
-    color: "#E23670",
-  },
-  firefox: {
-    label: "Firefox",
-    color: "#E88C30",
-  },
-  edge: {
-    label: "Edge",
-    color: "#AF57DB",
-  },
-  other: {
-    label: "Other",
-    color: "#2EB88A",
-  },
-} satisfies ChartConfig
+interface Props {
+  browsers: BrowserGroup[];
+  filter?: string;
+}
+function getPeriodDescription(filter: Props['filter']) {
+  switch (filter) {
+    case 'dias':
+      return {
+        subtitle: 'Últimos 60 días',
+        trend: 'Incremento de visitas este mes',
+      };
+    case 'meses':
+      return {
+        subtitle: 'Últimos 30 meses',
+        trend: 'Resumen del tráfico mensual',
+      };
+    case 'todo':
+      return {
+        subtitle: 'Visitas acumuladas del generales',
+        trend: 'Datos históricos generales',
+      };
+    default:
+      return {
+        subtitle: 'Periodo no definido',
+        trend: 'Sin datos comparativos',
+      };
+  }
+}
+function getColorForIndex(index: number): string {
+  const hue = (index * 47) % 360;
+  return `hsl(${hue}, 70%, 55%)`;
+}
+export function TableNavGeneral({ browsers, filter }: Props) {
 
-export function TableNavGeneral() {
-  const totalVisitors = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.visitors, 0)
-  }, [])
+  const chartData = browsers.map((browserData, index) => {
+    const label = browserData.browser ?? 'Otro';
+    return {
+      label,
+      visitors: browserData.visitors,
+      fill: getColorForIndex(index),
+    };
+  });
+
+  const totalVisitors = chartData.reduce((acc, curr) => acc + curr.visitors, 0);
+
+  const chartConfig: ChartConfig = {
+    visitors: {
+      label: "Visitors",
+    },
+    ...chartData.reduce((config, item) => {
+      config[item.label] = {
+        label: item.label,
+        color: item.fill,
+      };
+      return config;
+    }, {} as ChartConfig),
+  };
+
+  const { subtitle, trend } = getPeriodDescription(filter);
 
   return (
-    <Card className="flex flex-col">
+    <Card className="h-full justify-center">
       <CardHeader className="items-center pb-0">
         <CardTitle>Navegadores</CardTitle>
-        <CardDescription>poner de los ultimos 2 meses fecha de inicio a fin o fecha de comienzo hasta el año</CardDescription>
+        <CardDescription>{subtitle}</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
@@ -74,7 +97,7 @@ export function TableNavGeneral() {
             <Pie
               data={chartData}
               dataKey="visitors"
-              nameKey="browser"
+              nameKey="label"
               innerRadius={60}
               strokeWidth={5}
             >
@@ -103,8 +126,9 @@ export function TableNavGeneral() {
                           Visitantes
                         </tspan>
                       </text>
-                    )
+                    );
                   }
+                  return null;
                 }}
               />
             </Pie>
@@ -113,12 +137,10 @@ export function TableNavGeneral() {
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
         <div className="flex items-center gap-2 font-medium leading-none">
-            Tendencia al alza del 5,2% este mes <TrendingUp className="h-4 w-4" />
+          {trend} <TrendingUp className="h-4 w-4" />
         </div>
-        <div className="leading-none text-muted-foreground">
-            Mostrando el total de visitantes de los últimos 6 meses
-        </div>
+        <div className="leading-none text-muted-foreground">{subtitle}</div>
       </CardFooter>
     </Card>
-  )
+  );
 }

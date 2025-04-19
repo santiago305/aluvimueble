@@ -1,12 +1,12 @@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, router } from '@inertiajs/react';
-import TableViewGeneral from './dashboard/tableViewGeneral';
 import { TableNavGeneral } from './dashboard/tableNavGeneral';
 import { TableBlogTopGeneral } from './dashboard/tableBlogTop.General';
 import { TableDepartmentsGeneral } from './dashboard/tableDepartmentsGeneral';
-import { DashboardProps } from '@/types/view';
+import { DashboardProps} from '@/types/view';
 import { useState } from 'react';
+import TabletViewGeneral from './dashboard/tableViewGeneral';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -15,7 +15,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Dashboard({ views, filter, regions, topUrls, browsers, deviceData }:DashboardProps
+export default function Dashboard({ filter, regions, topUrls, browsers, deviceData }:DashboardProps
 ) {
     
     const [currentFilter, setCurrentFilter] = useState(filter);
@@ -28,12 +28,6 @@ export default function Dashboard({ views, filter, regions, topUrls, browsers, d
             router.get('/dashboard', { filter: selectedFilter });
         }
       };
-      
-    // aca formatearemos los datos de fecha
-    const formatDate = (dateString: string): string => {
-      if (!dateString) return "";
-      return new Date(dateString).toLocaleDateString("es-ES");
-    };
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -68,9 +62,11 @@ export default function Dashboard({ views, filter, regions, topUrls, browsers, d
                     </div>
                 </div>
                 <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">
-                    <TableViewGeneral deviceData={deviceData} />
+                    <TabletViewGeneral deviceData={deviceData} />
                 </div>
             </div>
         </AppLayout>
     );
 }
+
+// deviceData={deviceData} 

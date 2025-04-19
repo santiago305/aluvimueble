@@ -61,12 +61,12 @@ class DashboardController extends Controller
         })->map(function ($group, $date) {
             return [
                 'date' => $date,
-                'desktop' => $group->where('device', 'desktop')->count(),
-                'mobile' => $group->where('device', 'mobile')->count(),
-                'tablet' => $group->where('device', 'tablet')->count(),
+                'desktop' => $group->where('device_type', 'desktop')->count(),
+                'mobile' => $group->where('device_type', 'mobile')->count(),
+                'tablet' => $group->where('device_type', 'tablet')->count(),
             ];
-        })->values();
-
+        })->sortBy('date')->values();
+        
         return Inertia::render('dashboard', [
             'views' => $views,
             'filter' => $filter,
@@ -77,3 +77,6 @@ class DashboardController extends Controller
         ]);
     }
 }
+// return response()->json([
+//     'deviceData' => $deviceData
+// ]);
