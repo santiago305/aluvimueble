@@ -26,14 +26,13 @@ export default function TabletViewGeneral({ deviceData }: props) {
 
   const chartData = React.useMemo(() => {
     return deviceData
-    .filter(entry => entry[activeChart] > 0)
     .map((entry) => ({
       date: entry.date,
       desktop: entry.desktop,
       mobile: entry.mobile,
       tablet: entry.tablet,
     }));
-  }, [deviceData, activeChart]);
+  }, [deviceData]);
 
   const chartConfig = {
     views: {
