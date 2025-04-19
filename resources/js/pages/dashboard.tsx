@@ -5,7 +5,7 @@ import TableViewGeneral from './dashboard/tableViewGeneral';
 import { TableNavGeneral } from './dashboard/tableNavGeneral';
 import { TableBlogTopGeneral } from './dashboard/tableBlogTop.General';
 import { TableDepartmentsGeneral } from './dashboard/tableDepartmentsGeneral';
-import { ViewListProps } from '@/types/view';
+import { DashboardProps } from '@/types/view';
 import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -15,7 +15,8 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Dashboard({ views, filter }:ViewListProps) {
+export default function Dashboard({ views, filter, regions, topUrls, browsers, deviceData }:DashboardProps
+) {
     
     const [currentFilter, setCurrentFilter] = useState(filter);
 
@@ -33,13 +34,6 @@ export default function Dashboard({ views, filter }:ViewListProps) {
       if (!dateString) return "";
       return new Date(dateString).toLocaleDateString("es-ES");
     };
-    {/* <div>
-        {Array.isArray(views) && views.map((view) => (
-            <li key={view.id}>
-            {formatDate(view.viewed_at)}
-            </li>
-        ))}
-    </div> */}
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -48,7 +42,7 @@ export default function Dashboard({ views, filter }:ViewListProps) {
                 <button 
                 className="p-1 text-sm rounded-sm bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200"
                 onClick={() => applyFilter('dias')}>
-                    Últimos 50 días
+                    Últimos 60 días
                 </button>
                 <button 
                 className="p-1 text-sm rounded-sm bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200"
@@ -62,19 +56,19 @@ export default function Dashboard({ views, filter }:ViewListProps) {
                 </button>
             </div>
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-                <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))' }}>
                     <div className="border-sidebar-border/70 dark:border-sidebar-border relative  overflow-hidden rounded-xl border">
-                        {/* <TableDepartmentsGeneral views = {views} /> */}
+                        <TableDepartmentsGeneral regions={regions} filter={currentFilter} />
                     </div>
                     <div className="border-sidebar-border/70 dark:border-sidebar-border relative overflow-hidden rounded-xl border">
-                        <TableBlogTopGeneral />
+                        <TableBlogTopGeneral topUrls={topUrls} filter={currentFilter} />
                     </div>
                     <div className="border-sidebar-border/70 dark:border-sidebar-border relative overflow-hidden rounded-xl border">
-                        <TableNavGeneral />
+                        <TableNavGeneral browsers={browsers}  filter={currentFilter} />
                     </div>
                 </div>
                 <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">
-                    <TableViewGeneral />
+                    <TableViewGeneral deviceData={deviceData} />
                 </div>
             </div>
         </AppLayout>
