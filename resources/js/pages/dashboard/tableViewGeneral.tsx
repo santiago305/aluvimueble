@@ -21,14 +21,19 @@ interface props {
 }
 
 export default function TabletViewGeneral({ deviceData }: props) {
+  const [activeChart, setActiveChart] =
+  React.useState<'desktop' | 'tablet' | 'mobile'>("desktop");
+
   const chartData = React.useMemo(() => {
-    return deviceData.map((entry) => ({
+    return deviceData
+    .filter(entry => entry[activeChart] > 0)
+    .map((entry) => ({
       date: entry.date,
       desktop: entry.desktop,
       mobile: entry.mobile,
       tablet: entry.tablet,
     }));
-  }, [deviceData]);
+  }, [deviceData, activeChart]);
 
   const chartConfig = {
     views: {
@@ -47,8 +52,6 @@ export default function TabletViewGeneral({ deviceData }: props) {
       color: "#E82020",
     },
   } satisfies ChartConfig;
-
-  const [activeChart, setActiveChart] = React.useState<keyof typeof chartConfig>("desktop");
 
   const total = React.useMemo(
     () => ({
@@ -130,9 +133,7 @@ export default function TabletViewGeneral({ deviceData }: props) {
             <Bar
               dataKey={activeChart}
               fill={
-                (activeChart !== "views"
-                  ? chartConfig[activeChart].color
-                  : "#000000")
+                chartConfig[activeChart].color
               }
             />
           </BarChart>
