@@ -22,4 +22,5 @@ export default defineConfig({
             'ziggy-js': resolve(__dirname, 'vendor/tightenco/ziggy'),
         },
     },
+    base: 'https://aluvimueble-production.up.railway.app/',
 });
